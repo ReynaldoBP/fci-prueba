@@ -24,6 +24,18 @@
             <input class="btn btn-sm btn-warning" type="button" value="Analisis"   name="bt_analisis" align="center" onclick="ajax_r();"/>  
           </td>        
         </tr>
+        <tr>
+          <td>
+            <label> Clusters: </label>
+            <select name="tipo_vehiculo" id="tipo_vehiculo">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            </select>
+          </td>
+        </tr>
       </table>
     </form>
 
@@ -259,56 +271,56 @@
             user_id0 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto});          
             arr_puntos0.push(user_id0);
             cont_id0 = cont_id0+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==2)
           {
             user_id1 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo});
             arr_puntos1.push(user_id1);
             cont_id1 = cont_id1+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==3)
           {
             user_id2 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto});
             arr_puntos2.push(user_id2);
             cont_id2 = cont_id2+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==4)
           {
             user_id3 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta});
             arr_puntos3.push(user_id3);
             cont_id3 = cont_id3+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==5)
           {
             user_id4 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta});
             arr_puntos4.push(user_id4);
             cont_id4 = cont_id4+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==6)
           {
             user_id5 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal});          
             arr_puntos5.push(user_id5);
             cont_id5 = cont_id5+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==7)
           {
             user_id6 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta});
             arr_puntos6.push(user_id6);
             cont_id6 = cont_id6+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==8)
           {
             user_id7 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta});
             arr_puntos7.push(user_id7);
             cont_id7 = cont_id7+1;
-            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
         }
         
@@ -464,6 +476,25 @@
             {             
             console.log(result); 
               var imagen4 = document.getElementById('imagen4').src = "{{ asset('img/images/HCNE.png') }}";
+            }
+          });
+      }
+function insertar_datos(latitud,
+                              longitud,
+                              fecha_registro,
+                              fecha_desde,
+                              fecha_hasta,
+                              marcador_desde,
+                              marcador_hasta,
+                              tipo_vehiculo)
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_carga_data_insert2/"+latitud+"/"+longitud+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde+"/"+marcador_hasta+"/"+tipo_vehiculo,
+            success: function(result)
+            {              
+              console.log(result);
             }
           });
       }         
