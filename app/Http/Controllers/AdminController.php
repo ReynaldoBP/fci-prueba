@@ -272,7 +272,7 @@ $result_all  = pg_query($insert_data);
 
   public function ajax_carga_data_insert2(Request $request,$latitud,$longitud,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde,$marcador_hasta,$tipo_vehiculo)
     {
-
+        dd('');
         $f_desde = $fecha_desde;
         $f_hasta = $fecha_hasta;
         
