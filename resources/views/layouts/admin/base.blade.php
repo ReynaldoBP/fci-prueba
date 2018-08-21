@@ -115,7 +115,7 @@
                   </li>  
                   <li><a><i class="fa fa-bar-chart"></i> Ánálisis <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ url('admin/analisis/seleccion') }}">Analisis General</a></li>
+                      <li><a href="{{ url('admin/analisis/seleccion') }}">Simulacion</a></li>
                       <li><a href="{{ url('admin/analisis/registro') }}">Recolección</a></li>
                       <li><a href="{{ url('admin/analisis/trayectoria') }}">Trayectoria</a></li>
                       <li><a href="{{ url('admin/analisis/seleccion') }}">CartoDB</a></li>

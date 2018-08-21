@@ -232,7 +232,7 @@ $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_
 
 
 $id=1;
-  $insert_data="INSERT INTO trayectoria_gye_hist(
+  $insert_data="INSERT INTO trayectoria_gye(
      latitud, longitud, velocidad, fecha, id_sector, id_tipo_vehiculo)
   VALUES ('$lat', '$long', '$velocidad', '$f_desde_mod', '$sector', '$tipo_vehiculo')";
 
@@ -241,6 +241,34 @@ $result_all  = pg_query($insert_data);
 
         return response()->json($array1);
     }
+    public function ajax_python_analisis1()
+    {
+
+        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
+        $array11=json_encode($test1);
+        return response($array11);
+   }
+   public function ajax_python_analisis2()
+    {
+
+        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/kmean.py");
+        $array11=json_encode($test1);
+        return response($array11);
+   }
+   public function ajax_python_analisis3()
+    {
+
+        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/HCE.py");
+        $array11=json_encode($test1);
+        return response($array11);
+   }
+   public function ajax_python_analisis4()
+    {
+
+        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/HCNE.py");
+        $array11=json_encode($test1);
+        return response($array11);
+   }
     /**
      * Show the form for creating a new resource.
      *

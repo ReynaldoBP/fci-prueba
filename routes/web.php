@@ -35,6 +35,11 @@ Route::get('admin/usuarios/asignacion', 'AdminController@UsuariosAsignacion');
 Route::get('admin/usuarios/configuracion', 'AdminController@UsuariosConfiguracion');
 Route::get('admin/usuarios/registro', 'AdminController@UsuariosRegistro');
 
+Route::get('admin/analisis/ajax_python_analisis1', 'AdminController@ajax_python_analisis1');
+Route::get('admin/analisis/ajax_python_analisis2', 'AdminController@ajax_python_analisis2');
+Route::get('admin/analisis/ajax_python_analisis3', 'AdminController@ajax_python_analisis3');
+Route::get('admin/analisis/ajax_python_analisis4', 'AdminController@ajax_python_analisis4');
+
 Route::get('admin/analisis/seleccion', 'AdminController@SeleccionPuntos');
 Route::get('admin/analisis/registro', 'AdminController@RegistroPuntos');
 Route::get('admin/analisis/trayectoria', 'AdminController@TrayectoriaPuntos');
@@ -43,10 +48,4 @@ Route::get('admin/analisis/ajax_carga_data/{fecha_desde}/{fecha_hasta}', 'AdminC
 Route::get('admin/analisis/ajax_carga_data2/{fecha_desde}', 'AdminController@ajax_carga_data2');
 Route::get('admin/analisis/ajax_carga_data_insert/{latitud}/{longitud}/{fecha_registro}/{fecha_desde}/{fecha_hasta}/{marcador_desde}/{marcador_hasta}/{tipo_vehiculo}', 'AdminController@ajax_carga_data_insert');
 Route::get('admin/analisis/ajax_r_analisis', 'AdminController@ajax_r_analisis');
-Route::get('admin/analisis/ajax_guardar_gye/{fecha_desde}/{lat}/{long}/{tipo_vehiculo}/{sector}/{velocidad}', 'AdminController@ajax_guardar_gye');
 //});
-
-
-
-
-

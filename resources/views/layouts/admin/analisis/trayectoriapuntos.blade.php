@@ -46,13 +46,13 @@
       <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
     integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
     crossorigin=""></script>
+    
   <script src="{{ asset('js/analisis/jquery-3.3.1.min.js') }}"></script>
   <!-- OSM -->
   <!-- Cluster -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster-src.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>  
 
- 
   <script>
       var latlngs      = new Array();
       var latlngs_data = new Array();
@@ -259,56 +259,56 @@
             user_id0 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto});          
             arr_puntos0.push(user_id0);
             cont_id0 = cont_id0+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==2)
           {
             user_id1 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo});
             arr_puntos1.push(user_id1);
             cont_id1 = cont_id1+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==3)
           {
             user_id2 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto});
             arr_puntos2.push(user_id2);
             cont_id2 = cont_id2+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==4)
           {
             user_id3 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta});
             arr_puntos3.push(user_id3);
             cont_id3 = cont_id3+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==5)
           {
             user_id4 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta});
             arr_puntos4.push(user_id4);
             cont_id4 = cont_id4+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==6)
           {
             user_id5 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal});          
             arr_puntos5.push(user_id5);
             cont_id5 = cont_id5+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==7)
           {
             user_id6 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta});
             arr_puntos6.push(user_id6);
             cont_id6 = cont_id6+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==8)
           {
             user_id7 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta});
             arr_puntos7.push(user_id7);
             cont_id7 = cont_id7+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            //insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
         }
         
@@ -361,7 +361,11 @@
         $.ajax(
           {
             type:"GET",
-            url: "ajax_carga_data_insert/"+latitud+"/"+longitud+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde+"/"+marcador_hasta+"/"+tipo_vehiculo,
+            url: "insert_data.php?latitud=" + latitud +
+                                    "&longitud=" + longitud + "&fecha_registro=" + fecha_registro +
+                                    "&fecha_desde=" + fecha_desde + "&fecha_hasta=" + fecha_hasta +
+                                    "&marcador_desde=" + marcador_desde + "&marcador_hasta=" + marcador_hasta +
+                                    "&tipo_vehiculo=" + tipo_vehiculo,
             success: function(result)
             {              
               console.log(result);
@@ -384,8 +388,86 @@
   </script>
     </div>
   </div>
-</div>  
 
+
+
+</div>  
+  <table>
+      <tr>
+        <th>
+                    <input class="btn btn-sm btn-warning" type="button" value="DBSCAM"   name="bt_analisis" align="center" onclick="ajax_python1();"/>
+              <img src="" id="imagen1" class="img-responsive" style="height: 450px;">
+        </th>
+        <th>
+                    <input class="btn btn-sm btn-warning" type="button" value="kmeans"   name="bt_analisis" align="center" onclick="ajax_python2();"/>
+            <img src="" id="imagen2" class="img-responsive" style="height: 450px;">
+        </th>
+      </tr>
+      <tr>
+        <th>
+                  <input class="btn btn-sm btn-warning" type="button" value="HCE"   name="bt_analisis" align="center" onclick="ajax_python3();"/>
+              <img src="" id="imagen3" class="img-responsive" style="height: 450px;">
+        </th>
+        <th>
+          <input class="btn btn-sm btn-warning" type="button" value="HCNE"   name="bt_analisis" align="center" onclick="ajax_python4();"/>
+          <img src="" id="imagen4" class="img-responsive" style="height: 450px;">
+        </th>
+      </tr>
+    </table>
+    <script type="text/javascript">
+  function ajax_python1()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis1",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen1 = document.getElementById('imagen1').src = "{{ asset('img/images/dbScanCal.png') }}";
+            }
+          });
+      }
+  function ajax_python2()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis2",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen2 = document.getElementById('imagen2').src = "{{ asset('img/images/KmeansCal.png') }}";
+            }
+          });
+      }
+ function ajax_python3()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis2",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen3 = document.getElementById('imagen3').src = "{{ asset('img/images/HCES.png') }}";
+            }
+          });
+      } 
+ function ajax_python4()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis2",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen4 = document.getElementById('imagen4').src = "{{ asset('img/images/HCNE.png') }}";
+            }
+          });
+      }         
+</script>
 </div>
 
 @endsection
