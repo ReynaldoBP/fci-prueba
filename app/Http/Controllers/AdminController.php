@@ -97,7 +97,7 @@ class AdminController extends Controller
     $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
 
 
-    $query_all   ="select id_tipo_vehiculo,latitud,longitud from trayectoria_gye where fecha >= '$f_desde_mod'";
+    $query_all   ="select id_tipo_vehiculo,latitud,longitud from trayectoria_gye where fecha = '$f_desde_mod'";
 
     $result_all  = pg_query($query_all);
     while($row_all=pg_fetch_row($result_all))
@@ -191,55 +191,57 @@ class AdminController extends Controller
 
         //exec("Rscript C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans.R");
         $test = exec('Rscript "C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans1.R"');
+        //$test = exec('Rscript "/home/kbaque/Archivos Kev/UG/Tesis/fci/public/R/analisis_kmeans1.R"');
         $array1=json_encode($test);
          
        return response($array1);
     }
-    public function ajax_guardar_gye(Request $request,$fecha_desde,$lat,$long,$tipo_vehiculo,$sector,$velocidad){
-$f_desde = $fecha_desde;
-$lat = $lat;
-$long = $long;
-$tipo_vehiculo = $tipo_vehiculo;
-$sector = $sector;
-$velocidad = $velocidad;
+    public function ajax_guardar_gye(Request $request,$fecha_desde,$lat,$long,$tipo_vehiculo,$sector,$velocidad)
+    {
+        $f_desde = $fecha_desde;
+        $lat = $lat;
+        $long = $long;
+        $tipo_vehiculo = $tipo_vehiculo;
+        $sector = $sector;
+        $velocidad = $velocidad;
 
-switch($velocidad)
-{
-  case 1:
-    $velocidad = '20';
-  break;
-  case 2:
-    $velocidad = '30';
-  break;
-  case 3:
-    $velocidad = '40';
-  break;
-  case 4:
-    $velocidad = '50';
-  break;
-  case 5:
-    $velocidad = '60';
-  break;
-  case 6:
-    $velocidad = '70';
-  break;    
-}
-$f_desde_mod=str_replace("T"," ",$f_desde);
-$f_desde_mod=str_replace("+","",$f_desde);
+        switch($velocidad)
+        {
+        case 1:
+            $velocidad = '20';
+        break;
+        case 2:
+            $velocidad = '30';
+        break;
+        case 3:
+            $velocidad = '40';
+        break;
+        case 4:
+            $velocidad = '50';
+        break;
+        case 5:
+            $velocidad = '60';
+        break;
+        case 6:
+            $velocidad = '70';
+        break;    
+        }
+        $f_desde_mod=str_replace("T"," ",$f_desde);
+        $f_desde_mod=str_replace("+","",$f_desde);
 
-$conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
-$dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
+        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+        $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
 
 
-$id=1;
-  $insert_data="INSERT INTO trayectoria_gye(
-     latitud, longitud, velocidad, fecha, id_sector, id_tipo_vehiculo)
-  VALUES ('$lat', '$long', '$velocidad', '$f_desde_mod', '$sector', '$tipo_vehiculo')";
+        $id=1;
+        $insert_data="INSERT INTO trayectoria_gye(
+            latitud, longitud, velocidad, fecha, id_sector, id_tipo_vehiculo)
+        VALUES ('$lat', '$long', '$velocidad', '$f_desde_mod', '$sector', '$tipo_vehiculo')";
 
-$result_all  = pg_query($insert_data);
-        $array1=json_encode($result_all);
+        $result_all  = pg_query($insert_data);
+                $array1=json_encode($result_all);
 
-        return response()->json($array1);
+                return response()->json($array1);
     }
     public function ajax_python_analisis1()
     {
@@ -272,7 +274,7 @@ $result_all  = pg_query($insert_data);
 
   public function ajax_carga_data_insert2(Request $request,$latitud,$longitud,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde,$marcador_hasta,$tipo_vehiculo)
     {
-        dd('');
+        
         $f_desde = $fecha_desde;
         $f_hasta = $fecha_hasta;
         

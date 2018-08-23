@@ -33,6 +33,7 @@ Route::get('mantenimiento', function () {
 });
 
 Auth::routes();
+
 //Route::group(['middleware' => ['auth']], function () {
 Route::get('admin', 'AdminController@index');
 Route::get('admin/indicadores/indicadores', 'AdminController@indicadores');
@@ -79,3 +80,19 @@ Route::post('editar_parametro', 'ParametroController@editar_parametro');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

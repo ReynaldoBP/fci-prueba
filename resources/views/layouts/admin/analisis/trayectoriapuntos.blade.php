@@ -44,7 +44,6 @@
       if (isset($_POST['bt_aceptar']))
       {
         $fecha_desde = $_POST['fecha_desde'];
-
       }
     ?>
     </div> 
@@ -72,18 +71,17 @@
       var latlngA; var lat; var cont=0;  
       var latlngB; var lng; var cont_funcion=0;
       var fecha_desde;
-      var fecha_hasta;
 
       var mymap = L.map('mapid', {
                     fadeAnimation: false,
                     zoomAnimation: false,
                     markerZoomAnimation: false
-                  }).setView([-2.1887106287772053,-79.89135503768922],15);
+                  }).setView([-2.1887106287772053,-79.89135503768922],16);
       var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
       var osmAttrib = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
       //var osm = new L.TileLayer(osmUrl,{minZoom: 7,maxZoom: 14,attribution: osmAttrib});
       var osm = new L.TileLayer(osmUrl, {
-        minZoom: 7, maxZoom: 20,
+        minZoom: 12, maxZoom: 18,
           attribution: osmAttrib,
           updateWhenIdle: true,
           reuseTiles: true
@@ -96,43 +94,48 @@
       function onMapClick(e)
       {
         var lvl_zoom=mymap.getZoom();
-        if(lvl_zoom>15)
+        if(cont<=1)
         {
-          window.alert("Por favor aléjese más.");
-        }
-        else if(lvl_zoom<15)
-        {
-          alert("Por favor acérquese más.");
-        }
-        else if(lvl_zoom==15)
-        {
-          //latitud = X || longitud = Y
-          lat = e.latlng.lat;
-          lng = e.latlng.lng;
-          var newcoor       = new Array();
-              newcoor[0]    = lat;
-              newcoor[1]    = lng;
-          latlngs.push(newcoor);
-          arr_lat_lng[cont] = e.latlng;
-          cont=cont+1;
-          if(cont==1||cont==2)
+          if(lvl_zoom>16)
           {
-            L.marker(newcoor, {icon: Icon_limite}).addTo(mymap);
-            //console.log(arr_lat_lng);
+            window.alert("Por favor aléjese más.");
           }
-          if(cont==2)
+          else if(lvl_zoom<16)
           {
-            var polyline     = L.polyline(latlngs, {color: ''}).addTo(mymap);
-            var centro_linea = polyline.getCenter();                    
-            var distancia_m  = parseInt(distancia(mymap,arr_lat_lng[0],arr_lat_lng[1]));          
-            var circulo      = L.circle(centro_linea, {radius: distancia_m*3}).addTo(mymap);
-            //L.marker(centro_linea, {icon: Icon_limite}).addTo(mymap);
-            console.log("centro: "+polyline.getCenter());
-            console.log("distancia funcion: ",distancia_m);
-          }       
+            alert("Por favor acérquese más.");
+          }
+          else if(lvl_zoom==16)
+          {
+            //latitud = X || longitud = Y
+            lat = e.latlng.lat;
+            lng = e.latlng.lng;
+            var newcoor       = new Array();
+                newcoor[0]    = lat;
+                newcoor[1]    = lng;
+            latlngs.push(newcoor);
+            arr_lat_lng[cont] = e.latlng;            
+            if(cont==0||cont==1)
+            {
+              L.marker(newcoor, {icon: Icon_limite}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng);
+              
+              //console.log(arr_lat_lng);
+            }
+            if(cont==1)
+            {
+              var polyline     = L.polyline(latlngs, {color: ''}).addTo(mymap);
+              var centro_linea = polyline.getCenter();                    
+              var distancia_m  = parseInt(distancia(mymap,arr_lat_lng[0],arr_lat_lng[1]));          
+              var circulo      = L.circle(centro_linea, {radius: distancia_m*1.5}).addTo(mymap);
+              //L.marker(centro_linea, {icon: Icon_limite}).addTo(mymap);
+              console.log("centro: "+polyline.getCenter());
+              console.log("distancia funcion: ",distancia_m);              
+            }
+            cont=cont+1;
+          }
         }
       }
-      mymap.on('click', onMapClick);
+      mymap.on('click', onMapClick);      
+
       /*
       *Funcion que se encarga de enviar los parametros necesarios para la carga masiva de puntos, mediante el uso de ajax.
       */
@@ -140,15 +143,14 @@
       {
         cont_funcion = cont_funcion+1;
         fecha_desde  = $('#fecha_desde').val();
-        fecha_hasta  = $('#fecha_hasta').val();
         latlngA      = arr_lat_lng[0];
         latlngB      = arr_lat_lng[1];
 
-        if((fecha_desde!="" && fecha_hasta!="") && (latlngA!=null && latlngB!=null) && cont_funcion==1)
+        if(fecha_desde!="" && (latlngA!=null && latlngB!=null) && cont_funcion==1)
         {        
-          carga_puntos(latlngA,latlngB,fecha_desde,fecha_hasta);
+          carga_puntos(latlngA,latlngB,fecha_desde);
         }
-        else if(fecha_desde=="" || fecha_hasta=="")
+        else if(fecha_desde=="")
         {
           alert("Ingrese los valores de las fechas.");        
         }
@@ -202,6 +204,7 @@
                   //L.marker(point, {icon: Icon_data}).addTo(mymap);
                 }
               }
+              //insertar_datos(latlngs_data);
               capa_point(latlngs_data);
             },
            error:function(result){
@@ -251,16 +254,14 @@
       */
       function capa_point(cordenada)
       {
-        var arr_all      = new Array();
-        var arr_puntos0  = new Array(); var arr_puntos1  = new Array(); var arr_puntos2  = new Array(); var arr_puntos3  = new Array();
-        var arr_puntos4  = new Array(); var arr_puntos5  = new Array(); var arr_puntos6  = new Array(); var arr_puntos7  = new Array();
-        var arr_puntos8  = new Array(); var arr_puntos9  = new Array(); var arr_puntos10 = new Array(); var arr_puntos11 = new Array();
-        var arr_puntos12 = new Array(); var arr_puntos13 = new Array(); var arr_puntos14 = new Array();            
-        var cont_id0  = 0;  var cont_id1  = 0; var cont_id2  = 0; var cont_id3 = 0; var cont_id4  = 0;  var cont_id5  = 0;    
-        var cont_id6  = 0;  var cont_id7  = 0; var cont_id8  = 0; var cont_id9 = 0; var cont_id10 = 0;  var cont_id11 = 0;
-        var cont_id12 = 0;  var cont_id13 = 0; var cont_id14 = 0;
-        var user_id0; var user_id1; var user_id2;  var user_id3;  var user_id4;  var user_id5;  var user_id6; var user_id7;
-        var user_id8; var user_id9; var user_id10; var user_id11; var user_id12; var user_id13; var user_id14;
+        var arr_puntos0     = new Array();
+        var arr_puntos1     = new Array();
+        var arr_puntos2     = new Array();
+        var arr_puntos3     = new Array();
+        var arr_puntos4     = new Array();
+        var arr_puntos5     = new Array();
+        var arr_puntos6     = new Array();
+        var arr_puntos7     = new Array();
         var layerControl    = false;
         var count_cordenada = cordenada.length;
 
@@ -268,71 +269,45 @@
         {
           if(cordenada[i][0]==1)
           {
-            user_id0 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto});          
-            arr_puntos0.push(user_id0);
-            cont_id0 = cont_id0+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos0.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==2)
           {
-            user_id1 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo});
-            arr_puntos1.push(user_id1);
-            cont_id1 = cont_id1+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos1.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==3)
           {
-            user_id2 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto});
-            arr_puntos2.push(user_id2);
-            cont_id2 = cont_id2+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos2.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==4)
           {
-            user_id3 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta});
-            arr_puntos3.push(user_id3);
-            cont_id3 = cont_id3+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos3.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==5)
           {
-            user_id4 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta});
-            arr_puntos4.push(user_id4);
-            cont_id4 = cont_id4+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos4.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==6)
           {
-            user_id5 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal});          
-            arr_puntos5.push(user_id5);
-            cont_id5 = cont_id5+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos5.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==7)
           {
-            user_id6 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta});
-            arr_puntos6.push(user_id6);
-            cont_id6 = cont_id6+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos6.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==8)
           {
-            user_id7 = L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta});
-            arr_puntos7.push(user_id7);
-            cont_id7 = cont_id7+1;
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));
+            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
         }
-        
-        var Auto_Paricular = "Auto particular = "+cont_id0;
-        var Buses          = "Buses = "+cont_id1;
-        var Taxi           = "Taxi = "+cont_id2;
-        var Metrovia       = "Metrovía = "+cont_id3;
-        var Moto           = "Moto = "+cont_id4;
-        var Camion         = "Camión = "+cont_id5;
-        var Camioneta      = "Camioneta = "+cont_id6;
-        var Expreso        = "Expreso = "+cont_id7;
-
         if(layerControl === false) {
           layerControl = L.control.layers().addTo(mymap);
         }
@@ -348,42 +323,18 @@
         var puntos_mapa7  = L.layerGroup(arr_puntos7).addTo(mymap);
 
         layerControl.addBaseLayer(puntos_mapa,"Tipos de Vehiculos")
-                    .addOverlay(puntos_mapa0,Auto_Paricular)
-                    .addOverlay(puntos_mapa1,Buses)
-                    .addOverlay(puntos_mapa2,Taxi)
-                    .addOverlay(puntos_mapa3,Metrovia)
-                    .addOverlay(puntos_mapa4,Moto)
-                    .addOverlay(puntos_mapa5,Camion)
-                    .addOverlay(puntos_mapa6,Camioneta)
-                    .addOverlay(puntos_mapa7,Expreso)
-
+                    .addOverlay(puntos_mapa0,"Auto particular->"+arr_puntos0.length)
+                    .addOverlay(puntos_mapa1,"Buses-------------->"+arr_puntos1.length)
+                    .addOverlay(puntos_mapa2,"Taxi----------------->"+arr_puntos2.length)
+                    .addOverlay(puntos_mapa3,"Metrovía---------->"+arr_puntos3.length)
+                    .addOverlay(puntos_mapa4,"Moto--------------->"+arr_puntos4.length)
+                    .addOverlay(puntos_mapa5,"Camión----------->"+arr_puntos5.length)
+                    .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
+                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length)
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
-      */      
-      function insertar_datos(latitud,
-                              longitud,
-                              fecha_registro,
-                              fecha_desde,
-                              fecha_hasta,
-                              marcador_desde,
-                              marcador_hasta,
-                              tipo_vehiculo)
-      {
-        $.ajax(
-          {
-            type:"GET",
-            url: "insert_data.php?latitud=" + latitud +
-                                    "&longitud=" + longitud + "&fecha_registro=" + fecha_registro +
-                                    "&fecha_desde=" + fecha_desde + "&fecha_hasta=" + fecha_hasta +
-                                    "&marcador_desde=" + marcador_desde + "&marcador_hasta=" + marcador_hasta +
-                                    "&tipo_vehiculo=" + tipo_vehiculo,
-            success: function(result)
-            {              
-              console.log(result);
-            }
-          });
-      }
+      */
       function ajax_r()
       {
         $.ajax(
