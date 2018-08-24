@@ -50,6 +50,7 @@
               <option value="2">Sur</option>            
               <option value="3">Este</option>
               <option value="4">Oeste</option>
+              <option value="4">>Centro</option>
               </select>
             </td>
         </tr>        
