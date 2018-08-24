@@ -12,7 +12,7 @@ datos<-rbind(rf14)
 #generar analisis kmeans
 kmeans.res<-kmeans(datos,center=1)
 #guardar imagen
-png(filename="C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/img/images/analisis.png", width = 800, height = 600)
+png(filename="/var/www/html/fci-prueba/public/img/images/analisis.png", width = 800, height = 600)
 #png(filename="/home/kbaque/Archivos Kev/UG/Tesis/fci/public/img/images/analisis2.png", width = 800, height = 600)
 #realiza el grafico
 plot(datos,col=kmeans.res$cluster)

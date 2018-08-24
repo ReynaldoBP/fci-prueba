@@ -71,7 +71,7 @@
       var latlngA; var lat; var cont=0;  
       var latlngB; var lng; var cont_funcion=0;
       var fecha_desde;
-
+      var usuario="kbaque";
       var mymap = L.map('mapid', {
                     fadeAnimation: false,
                     zoomAnimation: false,
@@ -177,12 +177,11 @@
           {
             type:"GET",
             url: "ajax_carga_data2/" + fecha_desde,
-
             success: function(result)
-            {
-            var JsonResult   = result;                   
+            {              
+            var JsonResult   = result;
             var count_result=result.latlngs.length
-            console.log(result.latlngs.length);
+            //console.log(result.latlngs.length);
               for(i=0;i<count_result;i++)
               {
                 var id_user    = JsonResult.latlngs[i][0];//ID user
@@ -200,11 +199,12 @@
                       point_data[0] = id_user;
                       point_data[1] = lat_d;
                       point_data[2] = lng_d;
-                  latlngs_data.push(point_data);
-                  //L.marker(point, {icon: Icon_data}).addTo(mymap);
+                  latlngs_data.push(point_data);                  
+                  
                 }
-              }
-              //insertar_datos(latlngs_data);
+              }              
+              insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
+              
               capa_point(latlngs_data);
             },
            error:function(result){
@@ -270,45 +270,38 @@
           if(cordenada[i][0]==1)
           {
             arr_puntos0.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==2)
           {
             arr_puntos1.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==3)
           {
             arr_puntos2.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==4)
           {
             arr_puntos3.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==5)
           {
             arr_puntos4.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==6)
           {
             arr_puntos5.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==7)
           {
             arr_puntos6.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==8)
           {
             arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
         }
-        if(layerControl === false) {
+        if(layerControl === false) 
+        {
           layerControl = L.control.layers().addTo(mymap);
         }
         
@@ -336,11 +329,11 @@
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */
       function ajax_r()
-      {
+      {        
         $.ajax(
           {
             type:"GET",
-            url: "ajax_r_analisis",
+            url: "ajax_r_analisis/"+usuario,
             success: function(result)
             {             
             console.log(result); 
@@ -430,19 +423,21 @@
             }
           });
       }
-function insertar_datos(latitud,
-                              longitud,
-                              fecha_registro,
-                              fecha_desde,
-                              fecha_hasta,
-                              marcador_desde,
-                              marcador_hasta,
-                              tipo_vehiculo)
-      {
+    function insertar_datos(coordenada,
+                            fecha_registro,
+                            fecha_desde,
+                            fecha_hasta,
+                            marcador_desde_lat,
+                            marcador_desde_lng,
+                            marcador_hasta_lat,
+                            marcador_hasta_lng,
+                            usuario)
+      {        
+        jObject= JSON.stringify(coordenada);
         $.ajax(
           {
-            type:"GET",
-            url: "ajax_carga_data_insert2/"+latitud+"/"+longitud+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde+"/"+marcador_hasta+"/"+tipo_vehiculo,
+            type:"GET",            
+            url: "ajax_carga_data_insert2/"+jObject+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde_lat+"/"+marcador_desde_lng+"/"+marcador_hasta_lat+"/"+marcador_hasta_lng+"/"+usuario,
             success: function(result)
             {              
               console.log(result);

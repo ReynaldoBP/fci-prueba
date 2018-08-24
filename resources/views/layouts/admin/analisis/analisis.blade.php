@@ -64,7 +64,7 @@
       var latlngB; var lng; var cont_funcion=0;
       var fecha_desde;
       var fecha_hasta;
-
+      var usuario="kbaque";
       var mymap = L.map('mapid', {
                     fadeAnimation: false,
                     zoomAnimation: false,
@@ -196,6 +196,7 @@
                   //L.marker(point, {icon: Icon_data}).addTo(mymap);
                 }
               }
+              insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
               capa_point(latlngs_data);
             },
            error:function(result){
@@ -261,42 +262,34 @@
           if(cordenada[i][0]==1)
           {
             arr_puntos0.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==2)
           {
             arr_puntos1.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==3)
           {
             arr_puntos2.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==4)
           {
             arr_puntos3.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==5)
           {
             arr_puntos4.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==6)
           {
             arr_puntos5.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==7)
           {
             arr_puntos6.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
           }
           if(cordenada[i][0]==8)
           {
-            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));
-            insertar_datos(cordenada[i][1],cordenada[i][2],"LOCALTIMESTAMP",fecha_desde,fecha_hasta,latlngA.lat,latlngA.lng,cordenada[i][0]);
+            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));            
           }
         }
         if(layerControl === false) {
@@ -326,19 +319,21 @@
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */      
-      function insertar_datos(latitud,
-                              longitud,
-                              fecha_registro,
-                              fecha_desde,
-                              fecha_hasta,
-                              marcador_desde,
-                              marcador_hasta,
-                              tipo_vehiculo)
-      {
+      function insertar_datos(coordenada,
+                            fecha_registro,
+                            fecha_desde,
+                            fecha_hasta,
+                            marcador_desde_lat,
+                            marcador_desde_lng,
+                            marcador_hasta_lat,
+                            marcador_hasta_lng,
+                            usuario)
+      {        
+        jObject= JSON.stringify(coordenada);
         $.ajax(
           {
-            type:"GET",
-            url: "ajax_carga_data_insert/"+latitud+"/"+longitud+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde+"/"+marcador_hasta+"/"+tipo_vehiculo,
+            type:"GET",            
+            url: "ajax_carga_data_insert/"+jObject+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde_lat+"/"+marcador_desde_lng+"/"+marcador_hasta_lat+"/"+marcador_hasta_lng+"/"+usuario,
             success: function(result)
             {              
               console.log(result);
@@ -362,7 +357,7 @@
         $.ajax(
           {
             type:"GET",
-            url: "ajax_r_analisis",
+            url: "ajax_r_analisis/"+usuario,
             success: function(result)
             {             
             console.log(result); 
@@ -370,16 +365,6 @@
             }
           });
       }
-  /*
-  
-      var puntos_mapa=L.layerGroup().addLayer(L.marker([39.984655,  116.318263]))
-                                    .addLayer(L.marker([39.986655,  116.5163]))
-                                    .addLayer(L.marker([39.987655,  116.611263])).addTo(mymap);
-      if(layerControl === false) {
-          layerControl = L.control.layers().addTo(mymap);
-      }
-      layerControl.addOverlay(puntos_mapa, "Gardens");
-  */
 
   </script>
     </div>
