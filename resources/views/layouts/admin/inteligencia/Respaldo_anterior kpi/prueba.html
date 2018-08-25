@@ -1,0 +1,33 @@
+<html lang="es">
+<body>
+<head>
+<meta charset="utf-8">
+<title> Ejericios </title>
+ <label for="caja1"> Elemento a Mostrar
+        <select name="grafico">
+        <option value="trafico_real" >Trafico en Tiempo Real</option>
+        <option value="barras" >Transito Vehicular</option>
+        <option value="circulo" >Cantidad de Vehiculos</option>
+        </select> 
+</label>
+<button>Mostrar</button>
+<script type="text/javascript">
+    function registrar(){
+        window.location="barras.php";
+    }
+</script>
+   <?php
+    switch(($_POST['grafico'])){
+		case 'trafico_real':
+		{?>
+            <script type="text/javascript">
+                function trafico(){
+                window.location="barras.php";
+                }
+        </script> 
+        <?php 
+}break;
+        ?>
+</head>
+</body>
+</html>

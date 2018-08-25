@@ -70,6 +70,29 @@ Route::post('editar_parametro', 'ParametroController@editar_parametro');
 //});
 
 
+//Nueva ruta: post' registro de usuario en la BD//
+Route::post('admin/usuarios/registro','AdminController@UsuariosRegistro_ajax_jquerty' );
+//Muestra el listado de usuarios creados
+Route::get('admin/usuarios/lregistro','AdminController@LiUsuariosRegistro' );
+ 
+ //rutas de KPI
+Route::post('admin/analisis/inteligencia', 'AdminController@inteligenciapost');
+Route::get('admin/analisis/inteligencia', 'AdminController@inteligencia');
+Route::get('admin/analisis/inteligencia/comparacion_mensual','AdminController@inteligenciaComparacion' );
+Route::get('admin/analisis/inteligencia/g_anual','AdminController@inteligenciaGrafico' );
+Route::post('admin/analisis/inteligencia/g_mensual','AdminController@inteligenciag_mensual' );
+
+//editar usuarios
+Route::get('admin/usuarios/userconfig','AdminController@edit_usuario' );
+
+
+
+
+
+
+
+
+
 
 
 

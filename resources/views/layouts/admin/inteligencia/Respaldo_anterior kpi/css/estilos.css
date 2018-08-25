@@ -1,0 +1,72 @@
+
+body
+{
+
+background: url(../img/background.jpg);
+}
+
+header 
+{	
+
+	margin-top: 1%;
+	margin-right: 1%;
+	margin-left: 1%;
+	text-align: center;
+
+}
+
+section 
+{
+
+	margin-right: 1%;
+	margin-left: 1%;
+}
+
+
+.pad-basic
+
+{
+padding:0%; 
+	
+}
+
+.no-btm
+{
+	margin-bottom:0%;
+}
+
+.btn-der
+{
+	text-align: right;
+}
+
+
+
+.grupo-box
+
+{
+	background-color: #000;
+	padding:2% !important;
+}
+
+.conticon
+{
+	background: transparent; 
+	z-index:2;
+}
+
+.iconlog
+{
+	margin-bottom: -22% !important;
+}
+
+.inpbtm
+{
+	margin-bottom: 2%;
+}
+
+.formitic
+
+{
+	padding-top: 15%;
+}

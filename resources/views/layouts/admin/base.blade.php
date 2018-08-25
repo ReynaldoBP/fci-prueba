@@ -119,6 +119,7 @@
                       <li><a href="{{ url('admin/analisis/registro') }}">Recolección</a></li>
                       <li><a href="{{ url('admin/analisis/trayectoria') }}">Trayectoria</a></li>
                       <li><a href="{{ url('admin/analisis/seleccion') }}">CartoDB</a></li>
+                      <li><a href="{{ url('admin/analisis/inteligencia') }}">Inteligencia de Negocios</a></li>
 
                     </ul>
                   </li>
@@ -311,6 +312,28 @@
     <script src="{{ asset('build/js/custom.min.js') }}"></script>
     <!--       <script src="{{ asset('build/js/app.js') }}"></script>       -->
     
+
+    <!-- ---------Script personalizados ------------------------------------------------>
+          <!--Registro de usuarios-->
+    <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/reg_us.js') }}"></script> 
+          <!--Registro de Grupo deusuarios-->
+    <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/reg_Grup.js') }}"></script> 
+          <!--Configuracion  de usuarios-->
+    <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/co_us.js') }}"></script> 
+          <!--Asignacion  de usuarios-->
+    <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/as_us.js') }}"></script> 
+<!-- Bootstrap -->
+    <link href="{{ asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    <!-- Dropzone.js 
+    <link href="{{ asset('vendors/dropzone/dist/min/dropzone.min.css') }}" rel="stylesheet">-->
+    <link href="{{ asset('vendors/dropzone/dist/dropzone.css') }}" rel="stylesheet">
+  <!-- ---------Script personalizados ------------------------------------------------>
+
+  
 
     <!-- form wizard-->
     <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') }}"></script> 

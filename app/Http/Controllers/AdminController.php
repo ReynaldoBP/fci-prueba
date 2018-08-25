@@ -375,4 +375,141 @@ class AdminController extends Controller
     {
         //
     }
+
+
+
+//KPI----------------
+public function inteligencia()
+    {
+        //
+        return view('layouts.admin.inteligencia.start');
+    }
+    public function inteligenciapost()
+    {
+        //
+        return view('layouts.admin.inteligencia.start');
+    }
+    public function inteligenciaComparacion()
+    {
+        //
+        return view('layouts.admin.inteligencia.comparacion');
+    }
+    public function inteligenciaGrafico()
+    {
+        //
+        return view('layouts.admin.inteligencia.grafico_2p');
+    }
+    public function inteligenciag_mensual()
+    {
+        //
+        return view('layouts.admin.inteligencia.indexbk');
+    }
+
+//KPI---------------
+
+
+public function UsuariosRegistro_ajax_jquerty(Request $request)
+    {
+        //definicion de variables
+        $data = $request->all();
+        //extaccion del nombre del email como nikname
+        $email= $data["email"];
+        $pos = strpos($email, "@");
+        $rest = substr($email, 0, $pos);
+        // variables locales que iran al compact
+        $Nme = $rest;
+        $Nombres = $data["nombre_us"] ." ". $data["apellido_us"];
+        $Cargo = $data["cargo_us"];
+        $Departamento = $data["Departamento_us"];
+        $Password = $data["id_us"];
+        //llamando a las funciones de creacion en personas y usuarios sistemas
+        $this->storepe_persona($data);
+        $this->storead_usuarios_sistemas($data);
+        //redireccionando directamente junto con datos relevantes para mostrar
+        return view('layouts.admin.usuarios.liRegistroUsuarios', compact('Nme','Nombres','Cargo','Departamento','Password'));
+       // return redirect('/admin/usuarios/lregistro');
+
+    }
+
+public function storepe_persona($data)
+    {
+            $fecha = new \DateTime();
+            $persona = new pe_personas;
+            $persona->id_persona = $data["id_us"];
+            $persona->nombres = $data["nombre_us"];
+            $persona->apellido = $data["apellido_us"];
+            $persona->nombres_completos = $data["nombre_us"] ." ". $data["apellido_us"];
+            $persona->id_tipo_identificacion = "CI";
+            $persona->identificacion = $data["id_us"];
+            $persona->email = $data["email"];
+            $persona->f_creacion = $fecha->format('d/m/Y'); //H:i:s  <-- hora
+            //$persona->ad_usuarios_sistemas_id_usuario = "null";  //eliminado temporalmente en la BD
+            $persona->save();
+            //return redirect('/admin/usuarios/registroa');// -> json (la vriable que retorna );// ruta especifica
+            //return back(); //redirecciona atras    
+    //echo 'creado artículo con id: ' . $persona->id_persona;  // para un futuro
+        
+    }
+    public function storead_usuarios_sistemas($data)
+    {
+
+        $fecha = date("Y-m-d"); ;//new \DateTime();
+        $pos = strpos($data["emaill"], "@");
+        $rest = substr($data["emaill"], 0, $pos);
+        $ad_us_sist = new AD_USUARIOS_SISTEMAS;
+        $ad_us_sist->id_usuario = $data["IDL"];
+        $ad_us_sist->descripcion = $data["nombresl"] ." ". $data["apellidosl"]  ;
+        $ad_us_sist->estado = "A";
+        $ad_us_sist->fecha_creacion = $fecha;//->format('d/m/Y');
+        $ad_us_sist->fecha_ultima_conexion = $fecha;
+        $ad_us_sist->clave = encrypt($data["IDL"]); //encrypt($data[staticId);
+        $ad_us_sist->id_persona = $data["IDL"];
+        $ad_us_sist->email=$data["emaill"];
+        $ad_us_sist->save();
+    }
+
+    public function edit_usuario(Request $request)
+    {
+        
+        $user = pe_personas::find(request()->clave_us);
+        if (is_null ($user))
+            {
+                App::abort(404);
+            }
+
+        return View::make('admin/usuarios/configuracion')->with('user', $user);
+    }
+public function select_listado_de_roles(){
+    //$ad_rolesrro = ad_roles:   
+    //:with('bebidas','carro_compra')->get(); 
+        //algo general...
+
+        //enviamos los datos a la vista
+    //$options = ad_roles->get('descripcion','id_rol');
+    return view('layouts.admin.usuarios.asignacionusuarios',compact('$bebidas_carro'));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
