@@ -427,7 +427,7 @@ public function UsuariosRegistro_ajax_jquerty(Request $request)
         $this->storepe_persona($data);
         $this->storead_usuarios_sistemas($data);
         //redireccionando directamente junto con datos relevantes para mostrar
-        return view('layouts.admin.usuarios.liRegistroUsuarios', compact('Nme','Nombres','Cargo','Departamento','Password'));
+        return view('layouts.admin.usuarios.liRegistroUsuarios', compact('Nme','Nombres','Password'));
        // return redirect('/admin/usuarios/lregistro');
 
     }
@@ -442,6 +442,8 @@ public function storepe_persona($data)
             $persona->nombres_completos = $data["nombre_us"] ." ". $data["apellido_us"];
             $persona->id_tipo_identificacion = "CI";
             $persona->identificacion = $data["id_us"];
+            $persona->telefono=$data["apellido_us"];
+            $persona->sexo=$data["generol"];
             //$persona->email = $data["email"];
             $persona->f_creacion = $fecha->format('m/d/Y'); //H:i:s  <-- hora
             //$persona->ad_usuarios_sistemas_id_usuario = "null";  //eliminado temporalmente en la BD
@@ -457,7 +459,7 @@ public function storepe_persona($data)
         $fecha = date("Y-m-d"); ;//new \DateTime();
         $pos = strpos($data["emaill"], "@");
         $rest = substr($data["emaill"], 0, $pos);
-        $ad_us_sist = new AD_USUARIOS_SISTEMAS;
+        $ad_us_sist = new ad_usuarios_sistemas;
         $ad_us_sist->id_usuario = $data["IDL"];
         $ad_us_sist->descripcion = $data["nombresl"] ." ". $data["apellidosl"]  ;
         $ad_us_sist->estado = "A";
@@ -465,7 +467,7 @@ public function storepe_persona($data)
         $ad_us_sist->fecha_ultima_conexion = $fecha;
         $ad_us_sist->clave = encrypt($data["IDL"]); //encrypt($data[staticId);
         $ad_us_sist->id_persona = $data["IDL"];
-        $ad_us_sist->email=$data["emaill"];
+        $ad_us_sist->correo=$data["emaill"];
         $ad_us_sist->save();
     }
 

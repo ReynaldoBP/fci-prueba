@@ -118,13 +118,13 @@ function validateSteps_____(stepnumber){
                      
                     if($('#ra_g_femenino').prop('checked'))
                     {
-                        $('#genero.l').val($('#ra_g_femenino').val());
+                        $('#generol').val("f");
 
                     }else if ($('#ra_g_masculino').prop('checked'))
                     {
-                        $('#genero.l').val($('#ra_g_masculino').val());
+                        $('#generol').val("m");
                     }else{
-                        $('#genero.l').val('No seleccionado');
+                        $('#generol').val('No seleccionado');
                     }
 
 

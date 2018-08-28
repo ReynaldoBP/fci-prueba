@@ -112,7 +112,7 @@
                 porque necesito que las mismas esten al pasar del paso 1 al dos y no en el
                 action del form -->
                 
-                <div class="invalid-tooltip">
+                <div class="invalid-tooltip">     
                   @if (count($errors) > 0)
                     <strong >Whoops!</strong> There were some problems with your input.<br><br>
                   <ul>
@@ -192,10 +192,10 @@
                     <input id="nombresl" name="nombresl"  value= "pr" style="display:none;" >
                     <input id="apellidosl" name="apellidosl"  value= "pr" style="display:none;" >
                   <!-- <input id="cargo.l" name="cargo.l"  value= "pr" style="display:none;" >
-                    <input id="departamento.l" name="departamento.l"  value= "pr" style="display:none;" >
+                    <input id="departamento.l" name="departamento.l"  value= "pr" style="display:none;" >-->
                     <input id="emaill" name="emaill"  value= "pr" style="display:none;" >
-                    <input id="genero.l" name="genero.l"  value= "pr" style="display:none;" >
-                    -->
+                    <input id="generol" name="generol"  value= "pr" style="display:none;" >
+                    
                 </div>
 
                <!-- <div class="form-group">
