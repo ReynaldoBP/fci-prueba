@@ -525,4 +525,8 @@ $('#js_configUs').smartWizard_configUs();
  $('.buttonNext').addClass('btn btn-success');
  $('.buttonPrevious').addClass('btn btn-primary');
  $('.buttonFinish').addClass('btn btn-default');
+// codigo temporal, para setear el paso cuando se llame a si mismo la pagina
+ if ($('#clave_us').val().length == 0){
+            selected:0;        
+        }else{ selected:1;}
 });

@@ -89,7 +89,7 @@
                 
               </ul>
               <div id="step-1">
-                <form class="form-horizontal form-label-left" action="admin/usuarios/userconfig" method="get" id="step-1f">
+                <form class="form-horizontal form-label-left" action="/admin/usuarios/userconfig" method="get" id="step-1f">
                   <div class="form-group">
                     <label class="control-label col-md-5 col-sm-3 col-xs-12">Clave de Usuario<span class="required">*</span>
                     </label>

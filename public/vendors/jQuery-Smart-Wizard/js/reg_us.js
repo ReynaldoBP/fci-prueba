@@ -102,7 +102,7 @@ function validateSteps_____(stepnumber){
                 $('#nombresl').val($('#nombres_us').val());
                 $('#apellidosl').val($('#apellido_us').val());
                 $('#emaill').val($('#email').val());
-
+/*
                 if($('#cargo_us').val().length == 0){
                     $('##cargo.l').val('Cargo no Asignado');
                 }else{  
@@ -114,7 +114,7 @@ function validateSteps_____(stepnumber){
                 }
                 else{ 
                     $('#departamento.l').val($('#Dep_us').val())
-                }
+                }*/
                      
                     if($('#ra_g_femenino').prop('checked'))
                     {
@@ -134,7 +134,7 @@ function validateSteps_____(stepnumber){
                 $('#staticId').val($('#id_us').val());
                 $('#staticnombre').val($('#nombres_us').val());
                 $('#staticapellido').val($('#apellido_us').val());
-                if($('#cargo_us').val().length == 0){
+               /* if($('#cargo_us').val().length == 0){
                     $('#staticcargo').val('Cargo no Asignado');
                 }else{  
                     $('#staticcargo').val($('#cargo_us').val());
@@ -145,7 +145,7 @@ function validateSteps_____(stepnumber){
                 }
                 else{ 
                     $('#staticdep').val($('#Dep_us').val());
-                }
+                }*/
                     $('#staticemail').val($('#email').val())  
 
                     if($('#ra_g_femenino').prop('checked'))
@@ -224,6 +224,7 @@ return isStepValid;
            if ($this.curStepIdx + 1 == "2" )
            {
                $('#step-1').submit();
+               alert("f");
 
            }else 
            {alert("Error!, pulsa Siguente hasta estar en el paso 2");}

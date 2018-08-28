@@ -426,8 +426,8 @@ public function UsuariosRegistro_ajax_jquerty(Request $request)
         // variables locales que iran al compact
         $Nme = $rest;
         $Nombres = $data["nombre_us"] ." ". $data["apellido_us"];
-        $Cargo = $data["cargo_us"];
-        $Departamento = $data["Departamento_us"];
+       /* $Cargo = $data["cargo_us"];
+        $Departamento = $data["Departamento_us"];*/
         $Password = $data["id_us"];
         //llamando a las funciones de creacion en personas y usuarios sistemas
         $this->storepe_persona($data);
@@ -448,8 +448,8 @@ public function storepe_persona($data)
             $persona->nombres_completos = $data["nombre_us"] ." ". $data["apellido_us"];
             $persona->id_tipo_identificacion = "CI";
             $persona->identificacion = $data["id_us"];
-            $persona->email = $data["email"];
-            $persona->f_creacion = $fecha->format('d/m/Y'); //H:i:s  <-- hora
+            //$persona->email = $data["email"];
+            $persona->f_creacion = $fecha->format('m/d/Y'); //H:i:s  <-- hora
             //$persona->ad_usuarios_sistemas_id_usuario = "null";  //eliminado temporalmente en la BD
             $persona->save();
             //return redirect('/admin/usuarios/registroa');// -> json (la vriable que retorna );// ruta especifica
@@ -484,7 +484,7 @@ public function storepe_persona($data)
                 App::abort(404);
             }
 
-        return View::make('admin/usuarios/configuracion')->with('user', $user);
+        return print_r($user);//view('/admin/usuarios/configuracion',compact('user'));
     }
 public function select_listado_de_roles(){
     //$ad_rolesrro = ad_roles:   

@@ -105,7 +105,7 @@
                           </li>-->
                         </ul>
 
-              <form action="/admin/usuarios/registro" method="get"  class="form-horizontal form-label-left"  id="step-1" > 
+              <form action="/admin/usuarios/registro" method="post"  class="form-horizontal form-label-left"  id="step-1" > 
               @csrf
 
               <!--Seccion para mostrar las validaciones en la vista, suspendi esta forma 
@@ -150,7 +150,7 @@
                     <div id="invalid_apellido" style='display:none;' class="invalid-tooltip">Escriba un Apellido</div>
                     </div>
                   </div>
-
+<!--Eliminado por descoordinacion en la bd, para agregar este campo deberia existir tablas en la bd llamadas Cargo y departamento
                   <div class="form-group">
                     <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12" maxlegth="9">Cargo</label>
                     <div class="col-md-5 col-sm-6 col-xs-12">
@@ -164,7 +164,7 @@
                       <input id="Dep_us" class="form-control col-md-7 col-xs-12" type="text" name="Departamento_us" placeholder="Ingrese un departamento">
                     </div>
                   </div>
-
+-->
                   <div class="form-group">
                     <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12" maxlegth="15" >E-mail<span class="required">*</span></label>
                     <div class="col-md-5 col-sm-5 col-xs-12">
@@ -191,11 +191,11 @@
                     <input id="IDL" name="IDL"  value= "pr" style="display:none;" > 
                     <input id="nombresl" name="nombresl"  value= "pr" style="display:none;" >
                     <input id="apellidosl" name="apellidosl"  value= "pr" style="display:none;" >
-                    <input id="cargo.l" name="cargo.l"  value= "pr" style="display:none;" >
+                  <!-- <input id="cargo.l" name="cargo.l"  value= "pr" style="display:none;" >
                     <input id="departamento.l" name="departamento.l"  value= "pr" style="display:none;" >
                     <input id="emaill" name="emaill"  value= "pr" style="display:none;" >
                     <input id="genero.l" name="genero.l"  value= "pr" style="display:none;" >
-                    
+                    -->
                 </div>
 
                <!-- <div class="form-group">
@@ -238,7 +238,7 @@
                       </div>
                 </div>
 
-                <div class="form-group">
+             <!--   <div class="form-group">
                       <label id ="lblCargo" class='control-label col-md-3 col-sm-3 col-xs-12'>Cargo: </label>
                        <div class="col-md-5 col-sm-5 col-xs-12">
                         <input type="text" readonly class="form-control col-md-7 col-xs-12" id="staticcargo" >
@@ -250,7 +250,7 @@
                        <div class="col-md-5 col-sm-5 col-xs-12">
                         <input type="text" readonly class="form-control col-md-7 col-xs-12" id="staticdep" >
                        </div>
-                </div>
+                </div>-->
 
                 <div class="form-group">
                       <label id ="lblEmail" class='control-label col-md-3 col-sm-3 col-xs-12' >E-mail: </label>

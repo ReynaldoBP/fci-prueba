@@ -320,6 +320,7 @@
     <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/reg_Grup.js') }}"></script> 
           <!--Configuracion  de usuarios-->
     <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/co_us.js') }}"></script> 
+    
           <!--Asignacion  de usuarios-->
     <script src="{{ asset('vendors/jQuery-Smart-Wizard/js/as_us.js') }}"></script> 
 <!-- Bootstrap -->
