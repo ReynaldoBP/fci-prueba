@@ -78,7 +78,7 @@ class AdminController extends Controller
         return view('layouts.admin.analisis.trayectoriapuntos');
     }    
     
-    public function ajax_carga_data2(Request $request, $fecha_desde)
+     public function ajax_carga_data2(Request $request, $fecha_desde)
     {
 
     $f_desde = $fecha_desde;
@@ -151,11 +151,11 @@ class AdminController extends Controller
        return response()->json($array1);
     }
     
-    public function ajax_r_analisis(Request $request, $usuario)
+    public function ajax_r_analisis(Request $request, $usuario, $num_cluster)
     {        
         //exec("Rscript C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans.R");
         //$test = exec('Rscript "C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans1.R"');
-        $test = exec("Rscript '/home/kbaque/Archivos Kev/UG/Tesis/fci/public/R/analisis_kmeans1.R' $usuario" );
+        $test = exec("Rscript '/home/kbaque/Archivos Kev/UG/Tesis/fci/public/R/analisis_kmeans1.R' $usuario $num_cluster" );
         $array1=json_encode($test);
          
        return response($array1);
@@ -235,27 +235,23 @@ class AdminController extends Controller
         $array11=json_encode($test1);
         return response($array11);
    }     
-   public function ajax_carga_data_insert(Request $request,$coordenada,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde_lat,$marcador_desde_lng,$marcador_hasta_lat,$marcador_hasta_lng,$usuario)
+   public function ajax_carga_data_insert(Request $request,$coordenada,$usuario)
    {
-       
+    /*
        $f_desde = $fecha_desde;
        $f_hasta = $fecha_hasta;
-
        $f_desde_mod=str_replace("+","",$f_desde);
        $f_hasta_mod=str_replace("+","",$f_hasta);
        $fecha_desde=$f_desde_mod;
        $fecha_hasta=$f_hasta_mod;
-
        $fecha_registro = date('Y-m-d H:i');
        $fecha_registro=str_replace("+","",$fecha_registro);
        $fecha_registro=str_replace("T"," ",$fecha_registro);
-
        $fecha_desde    = $fecha_desde;
-       $fecha_desde    =str_replace("T"," ",$fecha_desde);
-
-       
+       $fecha_desde    =str_replace("T"," ",$fecha_desde);       
        $fecha_hasta    = $fecha_hasta;
-       $fecha_hasta    =str_replace("T"," ",$fecha_hasta);        
+       $fecha_hasta    =str_replace("T"," ",$fecha_hasta);    
+    */
        $i=0;
 
        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
@@ -269,36 +265,33 @@ class AdminController extends Controller
 
        while($i<$cont_data)
        {
-           $query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario,fecha_registro, fecha_desde, fecha_hasta, marcador_lat_desde, marcador_lng_desde, marcador_lat_hasta, marcador_lng_hasta, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',' $fecha_registro ','$fecha_desde ',' $fecha_hasta ',' $marcador_desde_lat ',' $marcador_desde_lng ',' $marcador_hasta_lat ',' $marcador_hasta_lng ',". $data[$i][0] .")";
+           //$query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario,fecha_registro, fecha_desde, fecha_hasta, marcador_lat_desde, marcador_lng_desde, marcador_lat_hasta, marcador_lng_hasta, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',' $fecha_registro ','$fecha_desde ',' $fecha_hasta ',' $marcador_desde_lat ',' $marcador_desde_lng ',' $marcador_hasta_lat ',' $marcador_hasta_lng ',". $data[$i][0] .")";
+           $query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',". $data[$i][0] .")";
            $result_all  = pg_query($query_all);
            $i=$i+1;
        }        
        $array1=json_encode(count($data));
        return response()->json($array1);
    }   
-  public function ajax_carga_data_insert2(Request $request,$coordenada,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde_lat,$marcador_desde_lng,$marcador_hasta_lat,$marcador_hasta_lng,$usuario)
+  //public function ajax_carga_data_insert2(Request $request,$coordenada,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde_lat,$marcador_desde_lng,$marcador_hasta_lat,$marcador_hasta_lng,$usuario)
+  public function ajax_carga_data_insert2(Request $request,$coordenada,$usuario)
     {
-        
+    /*
         $f_desde = $fecha_desde;
         $f_hasta = $fecha_hasta;
-
         $f_desde_mod=str_replace("+","",$f_desde);
         $f_hasta_mod=str_replace("+","",$f_hasta);
         $fecha_desde=$f_desde_mod;
         $fecha_hasta=$f_hasta_mod;
-
         $fecha_registro = date('Y-m-d H:i');
         $fecha_registro=str_replace("+","",$fecha_registro);
         $fecha_registro=str_replace("T"," ",$fecha_registro);
-
         $fecha_desde    = $fecha_desde;
-        $fecha_desde    =str_replace("T"," ",$fecha_desde);
-
-        
+        $fecha_desde    =str_replace("T"," ",$fecha_desde);        
         $fecha_hasta    = $fecha_hasta;
-        $fecha_hasta    =str_replace("T"," ",$fecha_hasta);        
+        $fecha_hasta    =str_replace("T"," ",$fecha_hasta);
+    */        
         $i=0;
-
         $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
         $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
 
@@ -310,7 +303,8 @@ class AdminController extends Controller
 
         while($i<$cont_data)
         {
-            $query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario,fecha_registro, fecha_desde, fecha_hasta, marcador_lat_desde, marcador_lng_desde, marcador_lat_hasta, marcador_lng_hasta, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',' $fecha_registro ','$fecha_desde ',' $fecha_hasta ',' $marcador_desde_lat ',' $marcador_desde_lng ',' $marcador_hasta_lat ',' $marcador_hasta_lng ',". $data[$i][0] .")";
+            //$query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario,fecha_registro, fecha_desde, fecha_hasta, marcador_lat_desde, marcador_lng_desde, marcador_lat_hasta, marcador_lng_hasta, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',' $fecha_registro ','$fecha_desde ',' $fecha_hasta ',' $marcador_desde_lat ',' $marcador_desde_lng ',' $marcador_hasta_lat ',' $marcador_hasta_lng ',". $data[$i][0] .")";
+            $query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',". $data[$i][0] .")";
             $result_all  = pg_query($query_all);
             $i=$i+1;
         }        

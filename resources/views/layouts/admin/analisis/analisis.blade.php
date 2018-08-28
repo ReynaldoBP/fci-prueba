@@ -11,22 +11,33 @@
       <h1 align="center">Lesstraffic</h1>
       <table>
         <tr>
-
-          <td><label>Fecha desde:</label></td>
+          <td><label>Fecha desde: </label></td>
           <td><input type="datetime-local" name="fecha_desde" id="fecha_desde"></td>        
         </tr>
         <tr>
-          <td><label>Fecha hasta:</label></td>
+          <td><label>Fecha hasta: </label></td>
           <td><input type="datetime-local" name="fecha_hasta" id="fecha_hasta"></td>
         </tr>
+        <tr>
+          <td colspan="2">
+            <label>Num. de Clusters: </label>
+            <select name="num_cluster" id="num_cluster">
+            <option value="1">1 Cluster</option>
+            <option value="2">2 Cluster</option>
+            <option value="3">3 Cluster</option>
+            <option value="4">4 Cluster</option>
+            <option value="5">5 Cluster</option>
+            </select>
+          </td>
+        </tr>          
         <tr>        
           <td align="r" colspan="2">
-            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  align="center" onclick="carga_puntos_map();"/>
-            <!--<input type="button" value="Analisis"   name="bt_analisis" align="center" />-->
-            <input class="btn btn-sm btn-warning" type="button" value="Actualizar" name="bt_limpiar"  align="center" onclick="window.location.reload()"/>
-            <input class="btn btn-sm btn-warning" type="button" value="Analisis"   name="bt_analisis" align="center" onclick="ajax_r();"/>  
+            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  align="center" onclick="carga_puntos_map();"/>            
+            <input class="btn btn-sm btn-success" type="button" value="Analisis"   name="bt_analisis" align="center" onclick="ajax_r();"/>
+            <input class="btn btn-sm btn-danger" type="button" value="Actualizar" name="bt_limpiar"  align="center" onclick="window.location.reload()"/>
+            
           </td>        
-        </tr>
+        </tr>      
       </table>
     </form>
 
@@ -43,8 +54,7 @@
   <div class="col-md-9">
     <div class="x_panel">
 
-<!--<div id="mapid" style="width: 100%;height:100vh;"></div>-->
-      <div id="mapid" style="width: 100%;height:550px;"></div>
+      <div id="mapid" style="width: 100%;height:617px;"></div>
 
       <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
     integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
@@ -57,6 +67,7 @@
 
  
   <script>
+      var bandera_analisis;
       var latlngs      = new Array();
       var latlngs_data = new Array();
       var arr_lat_lng  = new Array();
@@ -132,14 +143,16 @@
       */
       function carga_puntos_map()
       {
-        cont_funcion = cont_funcion+1;
+        bandera_analisis=true;
+        console.log(cont_funcion);
         fecha_desde  = $('#fecha_desde').val();
         fecha_hasta  = $('#fecha_hasta').val();
         latlngA      = arr_lat_lng[0];
         latlngB      = arr_lat_lng[1];
 
-        if((fecha_desde!="" && fecha_hasta!="") && (latlngA!=null && latlngB!=null) && cont_funcion==1)
+        if(fecha_desde!="" && (latlngA!=null && latlngB!=null) && cont_funcion==0)
         {        
+          cont_funcion = cont_funcion+1;
           carga_puntos(latlngA,latlngB,fecha_desde,fecha_hasta);
         }
         else if(fecha_desde=="" || fecha_hasta=="")
@@ -196,7 +209,8 @@
                   //L.marker(point, {icon: Icon_data}).addTo(mymap);
                 }
               }
-              insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
+              //insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
+              insertar_datos(latlngs_data,usuario);
               capa_point(latlngs_data);
             },
            error:function(result){
@@ -295,16 +309,23 @@
         if(layerControl === false) {
           layerControl = L.control.layers().addTo(mymap);
         }
-        
         var puntos_mapa   = L.layerGroup(null).addTo(mymap);
-        var puntos_mapa0  = L.layerGroup(arr_puntos0).addTo(mymap);
-        var puntos_mapa1  = L.layerGroup(arr_puntos1).addTo(mymap);
-        var puntos_mapa2  = L.layerGroup(arr_puntos2).addTo(mymap);
-        var puntos_mapa3  = L.layerGroup(arr_puntos3).addTo(mymap);
-        var puntos_mapa4  = L.layerGroup(arr_puntos4).addTo(mymap);
-        var puntos_mapa5  = L.layerGroup(arr_puntos5).addTo(mymap);
-        var puntos_mapa6  = L.layerGroup(arr_puntos6).addTo(mymap);
-        var puntos_mapa7  = L.layerGroup(arr_puntos7).addTo(mymap);
+        if(arr_puntos0.length>0){var puntos_mapa0  = L.layerGroup(arr_puntos0).addTo(mymap);}
+        else{var puntos_mapa0  = L.layerGroup(arr_puntos0);}
+        if(arr_puntos1.length>0){var puntos_mapa1  = L.layerGroup(arr_puntos1).addTo(mymap);}
+        else{var puntos_mapa1  = L.layerGroup(arr_puntos1);}
+        if(arr_puntos2.length>0){var puntos_mapa2  = L.layerGroup(arr_puntos2).addTo(mymap);}
+        else{var puntos_mapa2  = L.layerGroup(arr_puntos2);}
+        if(arr_puntos3.length>0){var puntos_mapa3  = L.layerGroup(arr_puntos3).addTo(mymap);}
+        else{var puntos_mapa3  = L.layerGroup(arr_puntos3);}
+        if(arr_puntos4.length>0){var puntos_mapa4  = L.layerGroup(arr_puntos4).addTo(mymap);}
+        else{var puntos_mapa4  = L.layerGroup(arr_puntos4);}
+        if(arr_puntos5.length>0){var puntos_mapa5  = L.layerGroup(arr_puntos5).addTo(mymap);}
+        else{var puntos_mapa5  = L.layerGroup(arr_puntos5);}
+        if(arr_puntos6.length>0){var puntos_mapa6  = L.layerGroup(arr_puntos6).addTo(mymap);}
+        else{var puntos_mapa6  = L.layerGroup(arr_puntos6);}
+        if(arr_puntos7.length>0){var puntos_mapa7  = L.layerGroup(arr_puntos7).addTo(mymap);}
+        else{var puntos_mapa7  = L.layerGroup(arr_puntos7);}
 
         layerControl.addBaseLayer(puntos_mapa,"Tipos de Vehiculos")
                     .addOverlay(puntos_mapa0,"Auto particular->"+arr_puntos0.length)
@@ -314,26 +335,21 @@
                     .addOverlay(puntos_mapa4,"Moto--------------->"+arr_puntos4.length)
                     .addOverlay(puntos_mapa5,"Camión----------->"+arr_puntos5.length)
                     .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
-                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length)
+                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
+        
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */      
-      function insertar_datos(coordenada,
-                            fecha_registro,
-                            fecha_desde,
-                            fecha_hasta,
-                            marcador_desde_lat,
-                            marcador_desde_lng,
-                            marcador_hasta_lat,
-                            marcador_hasta_lng,
+      function insertar_datos(coordenada,                            
                             usuario)
       {        
         jObject= JSON.stringify(coordenada);
         $.ajax(
           {
             type:"GET",            
-            url: "ajax_carga_data_insert/"+jObject+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde_lat+"/"+marcador_desde_lng+"/"+marcador_hasta_lat+"/"+marcador_hasta_lng+"/"+usuario,
+            //url: "ajax_carga_data_insert/"+jObject+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde_lat+"/"+marcador_desde_lng+"/"+marcador_hasta_lat+"/"+marcador_hasta_lng+"/"+usuario,
+            url: "ajax_carga_data_insert/"+jObject+"/"+usuario,
             success: function(result)
             {              
               console.log(result);
@@ -353,17 +369,25 @@
           });
       }
       function ajax_r()
-      {
-        $.ajax(
-          {
-            type:"GET",
-            url: "ajax_r_analisis/"+usuario,
-            success: function(result)
-            {             
-            console.log(result); 
-              var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.jpeg') }}";
-            }
-          });
+      {        
+        if (bandera_analisis==true)
+        {
+          num_cluster = $('#num_cluster').val();
+          $.ajax(
+            {
+              type:"GET",
+              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,              
+              success: function(result)
+              {
+              console.log(result); 
+                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.jpeg') }}";
+              }
+            });
+        }
+        else
+        {
+          alert("Por favor primero indique la zona donde desea realizar el analisis.");
+        }        
       }
 
   </script>
