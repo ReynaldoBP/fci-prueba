@@ -20,7 +20,52 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+#carto db
+    
+    public function cartodb1()
+    {
+        return view('layouts.admin.analisis.cartodb1');
+    }
+    public function cartodb2()
+    {
+        return view('layouts.admin.analisis.cartodb2');
+    }
+    public function cartodb3()
+    {
+        return view('layouts.admin.analisis.cartodb3');
+    }
+    public function cartodb4()
+    {
+        return view('layouts.admin.analisis.cartodb4');
+    }
+    public function cartodb5()
+    {
+        return view('layouts.admin.analisis.cartodb5');
+    }
+    public function cartodb6()
+    {
+        return view('layouts.admin.analisis.cartodb6');
+    }
+    public function cartodb7()
+    {
+        return view('layouts.admin.analisis.cartodb7');
+    }
+    public function cartodb8()
+    {
+        return view('layouts.admin.analisis.cartodb8');
+    }
+    public function cartodb9()
+    {
+        return view('layouts.admin.analisis.cartodb9');
+    }
+    public function cartodb10()
+    {
+        return view('layouts.admin.analisis.cartodb10');
+    }
+    public function cartodb11()
+    {
+        return view('layouts.admin.analisis.cartodb11');
+    }
     public function index()
     {
         //

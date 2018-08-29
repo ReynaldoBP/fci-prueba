@@ -118,8 +118,35 @@
                       <li><a href="{{ url('admin/analisis/seleccion') }}">Simulacion</a></li>
                       <li><a href="{{ url('admin/analisis/registro') }}">Recolección</a></li>
                       <li><a href="{{ url('admin/analisis/trayectoria') }}">Trayectoria</a></li>
-                      <li><a href="{{ url('admin/analisis/seleccion') }}">CartoDB</a></li>
                       <li><a href="{{ url('admin/analisis/inteligencia') }}">Inteligencia de Negocios</a></li>
+                        <li><a>Carto DB<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li><a href="{{ url('admin/analisis/cartodb1') }}">Crear Centroides de geometría</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb2') }}">Enlace de segunda capa</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb3') }}">Crear búferes de viaje o distancia</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb4') }}">Intersecar y agregar</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb5') }}">Agregar columnas del segundo conjunto de datos</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb6') }}">Encuentra el más cercano</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb7') }}">Detectar valores atípicos y clusteres</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb8') }}">Submuestra porcentaje de filas</a>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb9') }}">Crear líneas a partir de puntos</a>
+                            </li>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb10') }}">Predecir tendencias y volatilidad</a>
+                            </li>
+                            </li>
+                            <li><a href="{{ url('admin/analisis/cartodb11') }}">Calcular clusters de puntos</a>
+                            </li>
+                          </ul>
+                        </li>
 
                     </ul>
                   </li>

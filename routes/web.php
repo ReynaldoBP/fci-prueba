@@ -103,19 +103,22 @@ Route::post('editar_parametro', 'ParametroController@editar_parametro');
 
 
 
+#carto DB
+Route::get('admin/analisis/cartodb1', 'AdminController@cartodb1');
+Route::get('admin/analisis/cartodb2', 'AdminController@cartodb2');
+Route::get('admin/analisis/cartodb3', 'AdminController@cartodb3');
+Route::get('admin/analisis/cartodb4', 'AdminController@cartodb4');
+Route::get('admin/analisis/cartodb5', 'AdminController@cartodb5');
+Route::get('admin/analisis/cartodb6', 'AdminController@cartodb6');
+Route::get('admin/analisis/cartodb7', 'AdminController@cartodb7');
+Route::get('admin/analisis/cartodb8', 'AdminController@cartodb8');
+Route::get('admin/analisis/cartodb9', 'AdminController@cartodb9');
+Route::get('admin/analisis/cartodb10', 'AdminController@cartodb10');
+Route::get('admin/analisis/cartodb10', 'AdminController@cartodb11');
 
 
 
-
-
-
-
-
-
-
-
-
-
+#
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
