@@ -280,7 +280,8 @@ class AdminController extends Controller
         $array11=json_encode($test1);
         return response($array11);
    }     
-   public function ajax_carga_data_insert(Request $request,$coordenada,$usuario)
+   //public function ajax_carga_data_insert(Request $request,$coordenada,$usuario)
+    public function ajax_carga_data_insert()
    {
     /*
        $f_desde = $fecha_desde;
@@ -296,7 +297,7 @@ class AdminController extends Controller
        $fecha_desde    =str_replace("T"," ",$fecha_desde);       
        $fecha_hasta    = $fecha_hasta;
        $fecha_hasta    =str_replace("T"," ",$fecha_hasta);    
-    */
+    
        $i=0;
 
        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
@@ -316,7 +317,10 @@ class AdminController extends Controller
            $i=$i+1;
        }        
        $array1=json_encode(count($data));
-       return response()->json($array1);
+       return response()->json($array1);*/
+       $jObject = $_POST['jObject'];
+       $array1=json_encode($jObject);
+       return response()->json($array1);        
    }   
   //public function ajax_carga_data_insert2(Request $request,$coordenada,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde_lat,$marcador_desde_lng,$marcador_hasta_lat,$marcador_hasta_lng,$usuario)
   public function ajax_carga_data_insert2(Request $request,$coordenada,$usuario)
