@@ -58,7 +58,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				 <ul class="agile_forms">
 					<li><a class="active" href="#" data-toggle="modal" data-target="#myModal2"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a> </li>
+
+<!--Registrar
 					<li><a href="#" data-toggle="modal" data-target="#myModal3"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sign Up</a> </li>
+-->
 				</ul>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
@@ -192,7 +195,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 																	<div class="signin-form profile">
 																	<h3 class="agileinfo_sign">Sign In</h3>	
 																			<div class="login-form">
-																				<form action="#" method="post">
+																				<form action="{{ route('login') }}" method="post">
+																					@csrf
 																					<input type="email" name="email" placeholder="correo" required="">
 																					<input type="password" name="password" placeholder="contraseña" required="">
 																					<div class="tp">
@@ -214,10 +218,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 														</div>
 													</div>
 													<!-- //Modal1 -->	
-													<!-- Modal2 -->
+<!--													
+
 													<div class="modal fade" id="myModal3" tabindex="-1" role="dialog">
 														<div class="modal-dialog">
-														<!-- Modal content-->
+
 															<div class="modal-content">
 																<div class="modal-header">
 																	<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -225,11 +230,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 																	<div class="signin-form profile">
 																	<h3 class="agileinfo_sign">Sign Up</h3>	
 																			<div class="login-form">
-																				<form action="#" method="post">
-																				   <input type="text" name="name" placeholder="Usuario" required="">
+																				<form action="{{ route('register') }}" method="post">
+																					@csrf
+
+																				   <input type="text" name="name" placeholder="Nombre" required="">
 																					<input type="email" name="email" placeholder="Correo" required="">
 																					<input type="password" name="password" placeholder="Contraseña" required="">
-																					<input type="password" name="password" placeholder="Confirme contraseña" required="">
+																					<input type="password" name="password_confirmation" placeholder="Confirme contraseña" required="">
 																					<input type="submit" value="Registrarse">
 																				</form>
 																			</div>
@@ -239,7 +246,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 															</div>
 														</div>
 													</div>
-													<!-- //Modal2 -->	
+-->
+
 <!-- Modal2 -->
 													<div class="modal fade" id="myModal4" tabindex="-1" role="dialog">
 														<div class="modal-dialog">

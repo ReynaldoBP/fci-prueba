@@ -34,7 +34,7 @@ Route::get('mantenimiento', function () {
 
 Auth::routes();
 
-//Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
 Route::get('admin', 'AdminController@index');
 Route::get('admin/indicadores/indicadores', 'AdminController@indicadores');
 Route::get('admin/roles/configuracion', 'AdminController@RolesConfiguracion');
@@ -67,7 +67,7 @@ Route::post('agregar_nuevo_parametro','ParametroController@agregar_nuevo_paramet
 Route::get('listado_parametro/{page?}', 'ParametroController@listado_parametro');
 Route::get('form_editar_parametro/{id_parametro}', 'ParametroController@form_editar_parametro');
 Route::post('editar_parametro', 'ParametroController@editar_parametro');
-//});
+
 
 
 //Nueva ruta: post' registro de usuario en la BD//
@@ -120,18 +120,23 @@ Route::get('admin/analisis/cartodb10', 'AdminController@cartodb11');
 
 
 #
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+});
