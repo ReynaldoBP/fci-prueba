@@ -162,14 +162,10 @@ class AdminController extends Controller
         $f_desde_mod=str_replace("T"," ",$f_desde);
         $f_hasta_mod=str_replace("T"," ",$f_hasta);
         //2009-02-03T12:30
-
-        $cont_lat=0;
-        $cont_long=0;
         $cont=0;
         //$conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='root'";
-        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+        $conn_string = "host='52.38.27.79' port='5432' dbname='gye_datoss' user='postgres' password='admin1234'";
         $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
-
 
         $query_all   ="select id_tipo_vehiculo,latitud,longitud from trayectoria_gye where fecha >= '$f_desde_mod' and fecha <= '$f_hasta_mod'";
 
