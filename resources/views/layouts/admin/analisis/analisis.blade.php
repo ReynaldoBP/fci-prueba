@@ -8,7 +8,7 @@
   <div class="col-md-3">
     <div class="x_panel">
          <form method="POST" class="form-horizontal form-label-left" >
-      <h1 align="center">Lesstraffic</h1>
+      
       <table>
         <tr>
           <td><label>Fecha desde: </label></td>
@@ -210,7 +210,7 @@
                 }
               }
               //insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
-              insertar_datos(latlngs_data,usuario);
+              insertar_datos(latlngs_data);
               capa_point(latlngs_data);
             },
            error:function(result){
@@ -270,45 +270,53 @@
         var arr_puntos7     = new Array();
         var layerControl    = false;
         var count_cordenada = cordenada.length;
-
+        var cont_vehiculos=0;
         for(i=0;i<count_cordenada;i++)
         {
           if(cordenada[i][0]==1)
           {
             arr_puntos0.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==2)
           {
             arr_puntos1.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==3)
           {
             arr_puntos2.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==4)
           {
             arr_puntos3.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==5)
           {
             arr_puntos4.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==6)
           {
             arr_puntos5.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==7)
           {
             arr_puntos6.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==8)
           {
-            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));            
+            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));    
+            cont_vehiculos++;        
           }
         }
         if(layerControl === false) {
           layerControl = L.control.layers().addTo(mymap);
-        }
+        }        
         var puntos_mapa   = L.layerGroup(null).addTo(mymap);
         if(arr_puntos0.length>0){var puntos_mapa0  = L.layerGroup(arr_puntos0).addTo(mymap);}
         else{var puntos_mapa0  = L.layerGroup(arr_puntos0);}
@@ -336,20 +344,21 @@
                     .addOverlay(puntos_mapa5,"Camión----------->"+arr_puntos5.length)
                     .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
                     .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
-        
+                    
+        alert("Total de vehiculos: "+cont_vehiculos);
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */      
-      function insertar_datos(coordenada,                            
-                            usuario)
+      function insertar_datos(coordenada)
       {        
         jObject= JSON.stringify(coordenada);
+        console.log(jObject);
         $.ajax(
           {
-            type:"GET",            
-            //url: "ajax_carga_data_insert/"+jObject+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde_lat+"/"+marcador_desde_lng+"/"+marcador_hasta_lat+"/"+marcador_hasta_lng+"/"+usuario,
-            url: "ajax_carga_data_insert/"+jObject+"/"+usuario,
+            type: "POST",            
+            url: "ajax_carga_data_insert",
+            data: {jObject:jObject},
             success: function(result)
             {              
               console.log(result);
