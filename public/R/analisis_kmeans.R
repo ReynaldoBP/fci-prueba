@@ -3,7 +3,7 @@ library(DBI)
 library(RPostgres)
 
 #conexion a la base
-conn=dbConnect(RPostgres :: Postgres (),host="52.38.27.79",port="5432",dbname="datos_gye",user="postgres",password="admin1234")
+conn=dbConnect(RPostgres :: Postgres (),host="52.38.27.79",port="5432",dbname="gye_datoss",user="postgres",password="admin1234")
 
 #extraer los datos
 rf14=dbGetQuery(conn,"SELECT latitud,longitud FROM public.trayectoria_gye_hist")
