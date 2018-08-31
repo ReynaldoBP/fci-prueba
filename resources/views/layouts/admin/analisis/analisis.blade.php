@@ -91,7 +91,7 @@
           reuseTiles: true
       });
       osm.addTo(mymap);
-
+ 
       /*
       *Funcion que genera marcadores sobre el mapa, validando el zoom del mismo.    
       */    
