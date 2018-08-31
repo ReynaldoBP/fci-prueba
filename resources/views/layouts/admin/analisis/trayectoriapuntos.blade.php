@@ -7,8 +7,7 @@
 <div class="row">
   <div class="col-md-3">
     <div class="x_panel">
-         <form method="POST" class="form-horizontal form-label-left" >
-      <h1 align="center">Lesstraffic</h1>
+         <form method="POST" class="form-horizontal form-label-left" >      
       <table>
         <tr>
 
@@ -24,6 +23,11 @@
             <option value="3">3 Cluster</option>
             <option value="4">4 Cluster</option>
             <option value="5">5 Cluster</option>
+            <option value="6">6 Cluster</option>
+            <option value="7">7 Cluster</option>
+            <option value="8">8 Cluster</option>
+            <option value="9">9 Cluster</option>
+            <option value="10">10 Cluster</option>            
             </select>
           </td>
         </tr>
@@ -48,7 +52,7 @@
   </div>
   <div class="col-md-9">
     <div class="x_panel">
-      <div id="mapid" style="width: 100%;height:592px;"></div>
+      <div id="mapid" style="width: 100%;height:593px;"></div>
 
       <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
     integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
@@ -57,9 +61,7 @@
   <script src="{{ asset('js/analisis/jquery-3.3.1.min.js') }}"></script>
   <!-- OSM -->
   <!-- Cluster -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster-src.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>  
-
+ 
   <script>      
       var bandera_analisis;      
       var latlngs      = new Array();
@@ -114,8 +116,6 @@
             if(cont==0||cont==1)
             {
               L.marker(newcoor, {icon: Icon_limite}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng);
-              
-              //console.log(arr_lat_lng);
             }
             if(cont==1)
             {
@@ -198,13 +198,11 @@
                       point_data[0] = id_user;
                       point_data[1] = lat_d;
                       point_data[2] = lng_d;
-                  latlngs_data.push(point_data);                  
-                  
+                  latlngs_data.push(point_data);                                    
                 }
               }              
-              //insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
-              insertar_datos(latlngs_data,usuario);              
               capa_point(latlngs_data);
+              insertar_datos(latlngs_data,usuario);
             },
            error:function(result){
             alert("Error en la carga masiva de datos.");
@@ -260,52 +258,57 @@
         var arr_puntos4     = new Array();
         var arr_puntos5     = new Array();
         var arr_puntos6     = new Array();
-        var arr_puntos7     = new Array();       
-        var layerControl    = false; 
+        var arr_puntos7     = new Array();
+        var layerControl    = false;
         var count_cordenada = cordenada.length;
-
+        var cont_vehiculos=0;
         for(i=0;i<count_cordenada;i++)
         {
           if(cordenada[i][0]==1)
           {
             arr_puntos0.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_moto}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==2)
           {
             arr_puntos1.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_colectivo}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==3)
           {
             arr_puntos2.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_auto}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==4)
           {
             arr_puntos3.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_motoneta}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==5)
           {
             arr_puntos4.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_bicicleta}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==6)
           {
             arr_puntos5.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_taxi_informal}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==7)
           {
             arr_puntos6.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_camioneta}));
+            cont_vehiculos++;
           }
           if(cordenada[i][0]==8)
           {
-            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));
+            arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));    
+            cont_vehiculos++;        
           }
         }
-        if(layerControl === false) 
-        {
+        if(layerControl === false) {
           layerControl = L.control.layers().addTo(mymap);
-        }
-        
+        }        
         var puntos_mapa   = L.layerGroup(null).addTo(mymap);
-
         if(arr_puntos0.length>0){var puntos_mapa0  = L.layerGroup(arr_puntos0).addTo(mymap);}
         else{var puntos_mapa0  = L.layerGroup(arr_puntos0);}
         if(arr_puntos1.length>0){var puntos_mapa1  = L.layerGroup(arr_puntos1).addTo(mymap);}
@@ -332,8 +335,9 @@
                     .addOverlay(puntos_mapa5,"Camión----------->"+arr_puntos5.length)
                     .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
                     .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
-        
                     
+        alert("Total de vehiculos: "+cont_vehiculos);
+        
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
@@ -437,21 +441,24 @@
             }
           });
       }
-    function insertar_datos(coordenada,
-                            usuario)
+      function insertar_datos(coordenada,usuario)
       {        
         jObject= JSON.stringify(coordenada);
+        obj_us= JSON.stringify(usuario);
+        console.log(jObject);
         $.ajax(
           {
-            type:"GET",            
-            //url: "ajax_carga_data_insert2/"+jObject+"/+"+fecha_registro+"+/+"+fecha_desde+"+/+"+fecha_hasta+"+/"+marcador_desde_lat+"/"+marcador_desde_lng+"/"+marcador_hasta_lat+"/"+marcador_hasta_lng+"/"+usuario,
-            url: "ajax_carga_data_insert2/"+jObject+"/"+usuario,
+            type: "POST",            
+            url: "ajax_carga_data_insert2",
+            data: {'jObject':jObject,'obj_us':obj_us},
+            
             success: function(result)
             {              
-              console.log(result);
+              var JsonResult   = result;   
+              console.log(JsonResult);
             }
           });
-      }         
+      }        
 </script>
 </div>
 
