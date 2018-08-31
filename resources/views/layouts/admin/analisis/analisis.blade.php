@@ -3,7 +3,7 @@
 @section('title', 'Configuracion Roles')
 
 @section('content')
-
+  
 <div class="row">
   <div class="col-md-3">
     <div class="x_panel">
