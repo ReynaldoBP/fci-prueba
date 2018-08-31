@@ -27,6 +27,11 @@
             <option value="3">3 Cluster</option>
             <option value="4">4 Cluster</option>
             <option value="5">5 Cluster</option>
+            <option value="6">6 Cluster</option>
+            <option value="7">7 Cluster</option>
+            <option value="8">8 Cluster</option>
+            <option value="9">9 Cluster</option>
+            <option value="10">10 Cluster</option>
             </select>
           </td>
         </tr>          
@@ -54,18 +59,15 @@
   <div class="col-md-9">
     <div class="x_panel">
 
-      <div id="mapid" style="width: 100%;height:617px;"></div>
+      <div id="mapid" style="width: 100%;height:593px;"></div>
 
       <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
     integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
     crossorigin=""></script>
   <script src="{{ asset('js/analisis/jquery-3.3.1.min.js') }}"></script>
   <!-- OSM -->
-  <!-- Cluster -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster-src.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>  
+  <!-- Cluster -->  
 
- 
   <script>
       var bandera_analisis;
       var latlngs      = new Array();
@@ -120,8 +122,7 @@
             arr_lat_lng[cont] = e.latlng;          
             if(cont==0||cont==1)
             {
-              L.marker(newcoor, {icon: Icon_limite}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng);
-              //console.log(arr_lat_lng);
+              L.marker(newcoor, {icon: Icon_limite}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng);              
             }
             if(cont==1)
             {
@@ -205,13 +206,11 @@
                       point_data[0] = id_user;
                       point_data[1] = lat_d;
                       point_data[2] = lng_d;
-                  latlngs_data.push(point_data);
-                  //L.marker(point, {icon: Icon_data}).addTo(mymap);
+                  latlngs_data.push(point_data);                  
                 }
               }
-              //insertar_datos(latlngs_data,"LOCALTIMESTAMP",fecha_desde,fecha_desde,latlngA.lat,latlngA.lat,latlngA.lat,latlngA.lat,usuario);
-              insertar_datos(latlngs_data);
               capa_point(latlngs_data);
+              insertar_datos(latlngs_data);
             },
            error:function(result){
             alert("Error en la carga masiva de datos.");
@@ -335,7 +334,7 @@
         if(arr_puntos7.length>0){var puntos_mapa7  = L.layerGroup(arr_puntos7).addTo(mymap);}
         else{var puntos_mapa7  = L.layerGroup(arr_puntos7);}
 
-        layerControl.addBaseLayer(puntos_mapa,"Tipos de Vehiculos")
+        layerControl.addBaseLayer(puntos_mapa,"Tipos de Vehículos")
                     .addOverlay(puntos_mapa0,"Auto particular->"+arr_puntos0.length)
                     .addOverlay(puntos_mapa1,"Buses-------------->"+arr_puntos1.length)
                     .addOverlay(puntos_mapa2,"Taxi----------------->"+arr_puntos2.length)
@@ -346,22 +345,26 @@
                     .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
                     
         alert("Total de vehiculos: "+cont_vehiculos);
+        
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */      
-      function insertar_datos(coordenada)
+      function insertar_datos(coordenada,usuario)
       {        
         jObject= JSON.stringify(coordenada);
+        obj_us= JSON.stringify(usuario);
         console.log(jObject);
         $.ajax(
           {
             type: "POST",            
             url: "ajax_carga_data_insert",
-            data: {jObject:jObject},
+            data: {'jObject':jObject,'obj_us':obj_us},
+            
             success: function(result)
             {              
-              console.log(result);
+              var JsonResult   = result;   
+              console.log(JsonResult);
             }
           });
       }
