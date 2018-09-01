@@ -8,9 +8,9 @@ cluster <- args[2]
 #conexion a la base
 conn=dbConnect(RPostgres :: Postgres (),host="52.38.27.79",port="5432",dbname="gye_datoss",user="postgres",password="admin1234")
 #Concatenar usuario
-query<-"SELECT latitud,longitud FROM public.trayectoria_gye_hist where usuario like'%"
+query<-"SELECT latitud,longitud FROM public.trayectoria_gye_hist where usuario ='"
 query_two<-paste(query,usuario)
-query_tree<-"%'"
+query_tree<-"'"
 queryfor<-paste(query_two,query_tree)
 #extraer los datos
 datos_query=dbGetQuery(conn,queryfor)
@@ -19,7 +19,7 @@ datos<-rbind(datos_query)
 #generar analisis kmeans
 kmeans.res<-kmeans(datos,center=cluster)
 #guardar imagen
-png(filename="/var/www/html/fci-prueba/public/img/images/analisis.png", width = 800, height = 600)
+jpeg(filename="/var/www/html/fci-prueba/public/img/images/analisis2.jpeg", width = 800, height = 600)
 #realiza el grafico
 plot(datos,col=kmeans.res$cluster)
 #pinta el cluster
