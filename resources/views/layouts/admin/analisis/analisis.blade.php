@@ -392,7 +392,7 @@
               success: function(result)
               {
               console.log(result); 
-                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.jpeg') }}";
+                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
               }
             });
         }
