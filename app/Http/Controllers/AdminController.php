@@ -125,36 +125,30 @@ class AdminController extends Controller
     
      public function ajax_carga_data2(Request $request, $fecha_desde)
     {
+        $f_desde = $fecha_desde;
+        $f_desde_mod=str_replace("T"," ",$f_desde);
+        //2009-02-03T12:30
+        $cont=0;
+        /*LOCAL */
+        //$conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='root'";
+        /*GYE */
+        $conn_string = "host='52.38.27.79' port='5432' dbname='gye_datoss' user='postgres' password='admin1234'";
+        /*CHINA */
+        //$conn_string = "host='52.38.27.79' port='5432' dbname='respaldo' user='postgres' password='admin1234'";
+        $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
 
-    $f_desde = $fecha_desde;
-    $f_desde_mod=str_replace("T"," ",$f_desde);
-    //2009-02-03T12:30
+        $query_all   ="select id_tipo_vehiculo,latitud,longitud from trayectoria_gye where fecha = '$f_desde_mod'";
 
-    $cont_lat=0;
-    $cont_long=0;
-    $cont=0;
-    /*LOCAL */
-    //$conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='root'";
-    /*GYE */
-    $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
-    /*CHINA */
-    //$conn_string = "host='52.38.27.79' port='5432' dbname='respaldo' user='postgres' password='admin1234'";
-    $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
-
-
-    $query_all   ="select id_tipo_vehiculo,latitud,longitud from trayectoria_gye where fecha = '$f_desde_mod'";
-
-    $result_all  = pg_query($query_all);
-    while($row_all=pg_fetch_row($result_all))
-    {
-    $arr_latlngs[$cont]=$row_all;
-    $cont=$cont+1;
-    }
-
-
-    $myJSON_latlngs = json_encode($arr_latlngs);
-    pg_close($dbconn);
-    $array = '{"latlngs":'. $myJSON_latlngs.'}';
+        $result_all  = pg_query($query_all);
+         
+        while($row_all=pg_fetch_row($result_all))
+        {
+            $arr_latlngs[$cont]=$row_all;
+            $cont=$cont+1;
+        }
+        $myJSON_latlngs = json_encode($arr_latlngs);
+        pg_close($dbconn);
+        $array = '{"latlngs":'. $myJSON_latlngs.'}';
         $array1=json_decode($array);
          
        return response()->json($array1);
@@ -168,14 +162,10 @@ class AdminController extends Controller
         $f_desde_mod=str_replace("T"," ",$f_desde);
         $f_hasta_mod=str_replace("T"," ",$f_hasta);
         //2009-02-03T12:30
-
-        $cont_lat=0;
-        $cont_long=0;
         $cont=0;
         //$conn_string = "host='localhost' port='5432' dbname='postgres' user='postgres' password='root'";
-        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+        $conn_string = "host='52.38.27.79' port='5432' dbname='gye_datoss' user='postgres' password='admin1234'";
         $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
-
 
         $query_all   ="select id_tipo_vehiculo,latitud,longitud from trayectoria_gye where fecha >= '$f_desde_mod' and fecha <= '$f_hasta_mod'";
 
@@ -200,7 +190,7 @@ class AdminController extends Controller
     {        
         //exec("Rscript C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans.R");
         //$test = exec('Rscript "C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans1.R"');
-        $test = exec("Rscript '/home/kbaque/Archivos Kev/UG/Tesis/fci/public/R/analisis_kmeans1.R' $usuario $num_cluster" );
+        $test = exec("Rscript '/var/www/html/fci-prueba/public/R/analisis_kmeans1.R' $usuario $num_cluster" );
         $array1=json_encode($test);
          
        return response($array1);
@@ -238,19 +228,17 @@ class AdminController extends Controller
         $f_desde_mod=str_replace("T"," ",$f_desde);
         $f_desde_mod=str_replace("+","",$f_desde);
 
-        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+        $conn_string = "host='52.38.27.79' port='5432' dbname='gye_datoss' user='postgres' password='admin1234'";
         $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
-
-
-        $id=1;
+        
         $insert_data="INSERT INTO trayectoria_gye(
             latitud, longitud, velocidad, fecha, id_sector, id_tipo_vehiculo)
         VALUES ('$lat', '$long', '$velocidad', '$f_desde_mod', '$sector', '$tipo_vehiculo')";
 
         $result_all  = pg_query($insert_data);
-                $array1=json_encode($result_all);
+        $array1=json_encode($result_all);
 
-                return response()->json($array1);
+        return response()->json($array1);
     }
     public function ajax_python_analisis1()
     {
@@ -280,85 +268,57 @@ class AdminController extends Controller
         $array11=json_encode($test1);
         return response($array11);
    }     
-   //public function ajax_carga_data_insert(Request $request,$coordenada,$usuario)
+   
     public function ajax_carga_data_insert()
-   {
-    /*
-       $f_desde = $fecha_desde;
-       $f_hasta = $fecha_hasta;
-       $f_desde_mod=str_replace("+","",$f_desde);
-       $f_hasta_mod=str_replace("+","",$f_hasta);
-       $fecha_desde=$f_desde_mod;
-       $fecha_hasta=$f_hasta_mod;
-       $fecha_registro = date('Y-m-d H:i');
-       $fecha_registro=str_replace("+","",$fecha_registro);
-       $fecha_registro=str_replace("T"," ",$fecha_registro);
-       $fecha_desde    = $fecha_desde;
-       $fecha_desde    =str_replace("T"," ",$fecha_desde);       
-       $fecha_hasta    = $fecha_hasta;
-       $fecha_hasta    =str_replace("T"," ",$fecha_hasta);    
-    
-       $i=0;
-
-       $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+   {    
+       //$conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+       $conn_string = "host='52.38.27.79' port='5432' dbname='gye_datoss' user='postgres' password='admin1234'";        
        $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
-
        $query_delete   ="DELETE FROM trayectoria_gye_hist";
        $result_delete  = pg_query($query_delete);
 
-       $data = json_decode($coordenada);
+       $jObject = $_POST['jObject'];
+       $data = json_decode($jObject);
+
+       $obj_us = $_POST['obj_us'];
+       $data_us = json_decode($obj_us);
+        
        $cont_data=count($data);
 
-       while($i<$cont_data)
-       {
-           //$query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario,fecha_registro, fecha_desde, fecha_hasta, marcador_lat_desde, marcador_lng_desde, marcador_lat_hasta, marcador_lng_hasta, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',' $fecha_registro ','$fecha_desde ',' $fecha_hasta ',' $marcador_desde_lat ',' $marcador_desde_lng ',' $marcador_hasta_lat ',' $marcador_hasta_lng ',". $data[$i][0] .")";
-           $query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',". $data[$i][0] .")";
-           $result_all  = pg_query($query_all);
-           $i=$i+1;
-       }        
-       $array1=json_encode(count($data));
-       return response()->json($array1);*/
-       $jObject = $_POST['jObject'];
-       $array1=json_encode($jObject);
-       return response()->json($array1);        
+       foreach($data as $itemData)
+       {           
+           $query_all   ="INSERT INTO trayectoria_gye_hist(usuario, latitud, longitud, id_tipo_vehiculo) 
+                            VALUES ('". $data_us ."',". $itemData[1] .",". $itemData[2] .",". $itemData[0] .")";
+           $result_all  = pg_query($query_all);           
+       }
+       $array1=json_encode($result_all);
+       return response()->json($array1);
    }   
-  //public function ajax_carga_data_insert2(Request $request,$coordenada,$fecha_registro,$fecha_desde,$fecha_hasta,$marcador_desde_lat,$marcador_desde_lng,$marcador_hasta_lat,$marcador_hasta_lng,$usuario)
-  public function ajax_carga_data_insert2(Request $request,$coordenada,$usuario)
+  
+  public function ajax_carga_data_insert2()
     {
-    /*
-        $f_desde = $fecha_desde;
-        $f_hasta = $fecha_hasta;
-        $f_desde_mod=str_replace("+","",$f_desde);
-        $f_hasta_mod=str_replace("+","",$f_hasta);
-        $fecha_desde=$f_desde_mod;
-        $fecha_hasta=$f_hasta_mod;
-        $fecha_registro = date('Y-m-d H:i');
-        $fecha_registro=str_replace("+","",$fecha_registro);
-        $fecha_registro=str_replace("T"," ",$fecha_registro);
-        $fecha_desde    = $fecha_desde;
-        $fecha_desde    =str_replace("T"," ",$fecha_desde);        
-        $fecha_hasta    = $fecha_hasta;
-        $fecha_hasta    =str_replace("T"," ",$fecha_hasta);
-    */        
-        $i=0;
-        $conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
-        $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
+       //$conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
+       $conn_string = "host='52.38.27.79' port='5432' dbname='gye_datoss' user='postgres' password='admin1234'";        
+       $dbconn = pg_connect($conn_string)or die('No se ha podido conectar: ' . pg_last_error());
+       $query_delete   ="DELETE FROM trayectoria_gye_hist";
+       $result_delete  = pg_query($query_delete);
 
-        $query_delete   ="DELETE FROM trayectoria_gye_hist";
-        $result_delete  = pg_query($query_delete);
+       $jObject = $_POST['jObject'];
+       $data = json_decode($jObject);
 
-        $data = json_decode($coordenada);
-        $cont_data=count($data);
+       $obj_us = $_POST['obj_us'];
+       $data_us = json_decode($obj_us);
+        
+       $cont_data=count($data);
 
-        while($i<$cont_data)
-        {
-            //$query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario,fecha_registro, fecha_desde, fecha_hasta, marcador_lat_desde, marcador_lng_desde, marcador_lat_hasta, marcador_lng_hasta, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',' $fecha_registro ','$fecha_desde ',' $fecha_hasta ',' $marcador_desde_lat ',' $marcador_desde_lng ',' $marcador_hasta_lat ',' $marcador_hasta_lng ',". $data[$i][0] .")";
-            $query_all   ="INSERT INTO trayectoria_gye_hist(latitud, longitud, usuario, id_tipo_vehiculo) VALUES (". $data[$i][1] .",". $data[$i][2] .",' $usuario ',". $data[$i][0] .")";
-            $result_all  = pg_query($query_all);
-            $i=$i+1;
-        }        
-        $array1=json_encode(count($data));
-        return response()->json($array1);
+       foreach($data as $itemData)
+       {           
+           $query_all   ="INSERT INTO trayectoria_gye_hist(usuario, latitud, longitud, id_tipo_vehiculo) 
+                            VALUES ('". $data_us ."',". $itemData[1] .",". $itemData[2] .",". $itemData[0] .")";
+           $result_all  = pg_query($query_all);           
+       }
+       $array1=json_encode($result_all);
+       return response()->json($array1);
     }
     /**
      * Show the form for creating a new resource.
