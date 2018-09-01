@@ -10,8 +10,7 @@
          <form method="POST" class="form-horizontal form-label-left" >      
       <table>
         <tr>
-
-          <td><label>Fecha desde:</label></td>
+          <td><label>Fecha: </label></td>
           <td><input type="datetime-local" name="fecha_desde" id="fecha_desde"></td>        
         </tr>
         <tr>
