@@ -69,7 +69,7 @@
       var latlngA; var lat; var cont=0;  
       var latlngB; var lng; var cont_funcion=0;
       var fecha_desde;
-      var usuario="kbaque";
+      var usuario="{{ Auth::user()->id }}";
       var mymap = L.map('mapid', {
                     fadeAnimation: false,
                     zoomAnimation: false,
