@@ -352,7 +352,7 @@
               url: "ajax_r_analisis/"+usuario+"/"+num_cluster,              
               success: function(result)
               {              
-                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.jpeg') }}";
+                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
               }
             });
         }
