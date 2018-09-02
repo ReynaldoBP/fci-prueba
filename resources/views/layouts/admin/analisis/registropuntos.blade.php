@@ -48,7 +48,7 @@
               <select name="sector" id="sector">
               <option value="1">Norte</option>
               <option value="2">Sur</option>
-              <option value="3">>Centro</option>
+              <option value="3">Centro</option>
               <option value="4">Este</option>
               <option value="5">Oeste</option>              
               </select>
