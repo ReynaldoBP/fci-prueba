@@ -77,7 +77,7 @@
       var latlngB; var lng; var cont_funcion=0;
       var fecha_desde;
       var fecha_hasta;
-      var usuario="kbaque";
+      var usuario="{{ Auth::user()->id }}";
       var mymap = L.map('mapid', {
                     fadeAnimation: false,
                     zoomAnimation: false,
@@ -392,7 +392,7 @@
               success: function(result)
               {
               console.log(result); 
-                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.jpeg') }}";
+                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
               }
             });
         }
