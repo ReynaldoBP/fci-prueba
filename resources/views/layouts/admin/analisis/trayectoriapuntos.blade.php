@@ -354,7 +354,7 @@
               success: function(result)
               {
               console.log(result); 
-                document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
               }
             });
         }
