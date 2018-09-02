@@ -113,11 +113,11 @@
                         <li><a href="#level1_1">Supervisar</a>
                       </ul>
                   </li>  
-                  <li><a><i class="fa fa-bar-chart"></i> Ánálisis <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-bar-chart"></i> Análisis <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{ url('admin/analisis/seleccion') }}">Analisis General</a></li>
+                      <li><a href="{{ url('admin/analisis/seleccion') }}">Análisis General</a></li>
                       <li><a href="{{ url('admin/analisis/registro') }}">Recolección manual</a></li>
-                      <li><a href="{{ url('admin/analisis/trayectoria') }}">Analisis Trayectoria</a></li>
+                      <li><a href="{{ url('admin/analisis/trayectoria') }}">Análisis Trayectoria</a></li>
                       <li><a href="{{ url('admin/analisis/inteligencia') }}">Inteligencia de Negocios</a></li>
                         <li><a>Carto DB<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
