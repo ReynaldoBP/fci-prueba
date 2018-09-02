@@ -8,7 +8,7 @@ cluster <- args[2]
 #conexion a la base
 conn=dbConnect(RPostgres :: Postgres (),host="52.38.27.79",port="5432",dbname="gye_datoss",user="postgres",password="admin1234")
 #Concatenar usuario
-query<-"SELECT latitud,longitud FROM public.trayectoria_gye_hist where usuario ='"
+query<-"SELECT longitud, latitud FROM public.trayectoria_gye_hist where usuario ='"
 query_two<-paste(query,usuario, sep="")
 query_tree<-"'"
 queryfor<-paste(query_two,query_tree, sep="")
