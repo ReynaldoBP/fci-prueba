@@ -187,7 +187,7 @@
             success: function(result)
             {
             var JsonResult   = result;                   
-            var count_result=result.latlngs.length
+            var count_result=result.latlngs.length;
             console.log(result.latlngs.length);
               for(i=0;i<count_result;i++)
               {
@@ -210,7 +210,7 @@
                 }
               }
               capa_point(latlngs_data);
-              insertar_datos(latlngs_data);
+              insertar_datos(latlngs_data,usuario);
             },
            error:function(result){
             alert("Error en la carga masiva de datos.");
