@@ -51,7 +51,7 @@ Route::get('admin/analisis/ajax_python_analisis4', 'AdminController@ajax_python_
 Route::get('admin/analisis/seleccion', 'AdminController@SeleccionPuntos');
 Route::get('admin/analisis/registro', 'AdminController@RegistroPuntos');
 Route::get('admin/analisis/trayectoria', 'AdminController@TrayectoriaPuntos');
-Route::get('admin/analisis/ajax_carga_data', 'AdminController@ajax_carga_data');
+
 Route::get('admin/analisis/ajax_carga_data/{fecha_desde}/{fecha_hasta}', 'AdminController@ajax_carga_data');
 Route::get('admin/analisis/ajax_carga_data2/{fecha_desde}', 'AdminController@ajax_carga_data2');
 
