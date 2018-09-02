@@ -190,7 +190,7 @@ class AdminController extends Controller
     {        
         //exec("Rscript C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/prueba/public/R/analisis_kmeans.R");
         //$test = exec("Rscript /home/kbaque/Archivos\ Kev/UG/Tesis/fci-produccion/public/R/analisis_kmeans1.R $usuario $num_cluster" );
-        $test = exec("Rscript '/var/www/html/fci-prueba/public/R/analisis_kmeans1.R' $usuario $num_cluster" );
+        $test = exec("Rscript /var/www/html/fci-prueba/public/R/analisis_kmeans1.R $usuario $num_cluster" );
         $array1=json_encode($test);
          
        return response($array1);
