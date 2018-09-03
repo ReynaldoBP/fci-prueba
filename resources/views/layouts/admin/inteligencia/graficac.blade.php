@@ -49,48 +49,20 @@
                   </div>
 
         <!--Cabecera-------->
-<!-- <html>
-<title>Analisis</title>
-    <body>
-        <h2>Analisis</h2> -->
-        <form id="formulario"  enctype="application/x-www-form-urlencoded">
-        Fecha Inicial:&nbsp; <input id="fecha1" type="date" name="fecha1" min="2018-07-01" max="2018-08-31"><br>
-        Fecha Final:&nbsp; <input id="fecha2" type="date" name="fecha2" min="2018-07-01" max="2018-08-31"><br>
+
+
+
+   <form id="formulario" action="/admin/analisis/inteligencia/gdiaria_" method="post" enctype="application/x-www-form-urlencoded">
+    @csrf
+        Fecha Inicial:&nbsp; <input id="fecha1" type="date" name="fecha1" min="2018-05-01" max="2018-09-01"><br>
+        Fecha Final:&nbsp; <input id="fecha2" type="date" name="fecha2" min="2018-05-01" max="2018-09-01"><br>
         Hora: &nbsp;<input type="time" name="hora1" min="08:00" max="19:00" step="3600"><br>
+            <input name="grafico" type="submit" id="btn-ingresar" value='Mostrar Grafica' />
+            <input type="button" value="Recargar página" onClick="location.reload();" />
         </form>
-        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-        <script>
-            $(document).on('ready',function(){
-                $('#btn-ingresar').click(function(){
-                var url ="start.blade.php" //"{{ url('admin/analisis/inteligencia') }}";                                     
-                $.ajax({                        
-                type: "POST",                 
-                url: url,                    
-                data: $("#formulario").serialize(),
-                success: function(data)            
-                {
-             $('#resp').html(data);           
-           }
-         });
-      });
-    });
-    </script>
- <form action="/admin/analisis/inteligencia/g_diaria" method="post" enctype="application/x-www-form-urlencoded">
- 	@csrf
-<input name="grafico" type=button id="btn-ingresar" value='Mostrar Grafica' />
-<input type="button" value="Recargar página" onClick="location.reload();" />
-        </form>
-<div id="resp"></div>
-                <td class="pad-basic"><div id="resp2"></div></td>
- <script language="javascript">
-function otra_ventana(direccion) {
-window.onload=(direccion);
-}
-</script>
-<!--     </body>
-</html> -->
+
 </div>
           </div>
-	<!--</body>
+    <!--</body>
 </html> -->
 @endsection 

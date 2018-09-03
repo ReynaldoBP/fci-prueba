@@ -75,8 +75,9 @@ Route::get('admin/analisis/inteligencia', 'AdminController@inteligencia');
 Route::get('admin/analisis/inteligencia/comparacion_mensual','AdminController@inteligenciaComparacion' );
 Route::get('admin/analisis/inteligencia/g_anual','AdminController@inteligenciaGrafico' );
 Route::post('admin/analisis/inteligencia/g_mensual','AdminController@inteligenciag_mensual' );
-Route::get('admin/analisis/inteligencia/g_diaria','AdminController@inteligencia_g_diario' );
-Route::post('admin/analisis/inteligencia/g_diaria','AdminController@inteligencia_g_diario_po' );
+Route::get('admin/analisis/inteligencia/gdiaria','AdminController@inteligenciagdiari' );
+Route::post('admin/analisis/inteligencia/gdiaria','AdminController@inteligenciagdiari_po' );
+Route::post('admin/analisis/inteligencia/gdiaria_','AdminController@inteligenciagdiari_po_' );
 
 //editar usuarios
 Route::get('admin/usuarios/userconfig','AdminController@edit_usuario' );
