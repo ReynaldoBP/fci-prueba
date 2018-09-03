@@ -98,8 +98,7 @@
               },
            error:function(result){
             swal("", "Error al generar el análisis.!", "success",{icon: "warning",});
-            document.getElementById('imagen').style.visibility = 'hidden';
-           }
+            }
             });
     }
       var bandera_analisis;
