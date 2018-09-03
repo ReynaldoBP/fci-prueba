@@ -414,6 +414,16 @@ public function inteligencia()
         //
         return view('layouts.admin.inteligencia.indexbk');
     }
+     public function inteligencia_g_diario()
+    {
+        //
+        return view('layouts.admin.inteligencia.grafica');
+    }
+    public function inteligencia_g_diario_po()
+    {
+        //
+        return view('layouts.admin.inteligencia.grafica');
+    }
 
 //KPI---------------
 

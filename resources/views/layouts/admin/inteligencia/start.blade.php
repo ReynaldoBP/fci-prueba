@@ -340,7 +340,8 @@ $mes=0;
     <div class="btn-group ml-auto" align="center">
         <a href="{{ url('admin/analisis/inteligencia/g_anual') }}" class="btn btn-primary btn-sm ml-auto">Grafica Anual</a> 
         <a href="{{ url('admin/analisis/inteligencia/comparacion_mensual') }}" class="btn btn-primary btn-sm ml-auto">Grafica Comparativa</a>
-        <input name="grafico" type=submit id=btn-ingresar value="Mostrar Grafica Mensual" class="btn btn-primary btn-sm ml-auto">  
+        <input name="grafico" type=submit id=btn-ingresar value="Mostrar Grafica Mensual" class="btn btn-primary btn-sm ml-auto"> 
+        <a href="{{ url('admin/analisis/inteligencia/g_diaria') }}" class="btn btn-primary btn-sm ml-auto">Grafica Diaria</a> 
     </div>
         
     <?php
