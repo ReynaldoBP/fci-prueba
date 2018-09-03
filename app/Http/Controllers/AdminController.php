@@ -243,35 +243,35 @@ class AdminController extends Controller
     public function ajax_python_analisis1()
     {
 
-        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
         $array11=json_encode($test1);
         return response($array11);
    }
    public function ajax_python_analisis2()
     {
 
-        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/kmean.py");
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/kmean.py");
         $array11=json_encode($test1);
         return response($array11);
    }
    public function ajax_python_analisis3()
     {
 
-        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/HCE.py");
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
         $array11=json_encode($test1);
         return response($array11);
    }
    public function ajax_python_analisis4()
     {
 
-        $test1 = shell_exec("python C:/Users/saludsa/Videos/prueba/resources/views/layouts/admin/analisis/HCNE.py");
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCNE.py");
         $array11=json_encode($test1);
         return response($array11);
    }     
    public function ajax_python(Request $resquest, $usuario, $cluster){
         $a=array();
         $linea = 0;
-        $archivo = fopen("C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/centroides-KmeanCal.csv", "r");
+        $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/centroides-KmeanCal.csv", "r");
         while (($datos = fgetcsv($archivo, ",")) == true) 
         {
           $num = count($datos);
