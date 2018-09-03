@@ -214,6 +214,7 @@
     }
 );
 		</script>
+        <a href="{{ url('admin/analisis/inteligencia') }}" class="btn btn-primary btn-sm ml-auto" >Regresar</a>
 </div>
           </div>
 	<!--</body>

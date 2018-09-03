@@ -118,7 +118,7 @@
                       <li><a href="{{ url('admin/analisis/seleccion') }}">Análisis General</a></li>
                       <li><a href="{{ url('admin/analisis/registro') }}">Recolección manual</a></li>
                       <li><a href="{{ url('admin/analisis/trayectoria') }}">Análisis Trayectoria</a></li>
-                      <li><a href="{{ url('admin/analisis/inteligencia') }}">Inteligencia de Negocios</a></li>
+                      <li><a href="{{ url('admin/analisis/inteligencia') }}">Indicadores KPI</a></li>
                         <li><a>Carto DB<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
                             <li><a href="{{ url('admin/analisis/cartodb1') }}">Crear Centroides de geometría</a>

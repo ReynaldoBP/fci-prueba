@@ -153,7 +153,7 @@ Highcharts.chart('container', {
     }]
 });
 		</script>
-        
+        <a href="{{ url('admin/analisis/inteligencia') }}" class="btn btn-primary btn-sm ml-auto" >Regresar</a>
     
  <!--    </body>
 </html> -->
