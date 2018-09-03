@@ -19,6 +19,15 @@
           <td><input type="datetime-local" name="fecha_hasta" id="fecha_hasta"></td>
         </tr>
         <tr>
+          <td colspan="2">  
+            <label>Base de datos: </label>
+            <select name="bd" id="bd">
+            <option value="1">Base de datos simulada </option>
+            <option value="2">Base de datos real </option>                    
+            </select>
+          </td>            
+        </tr>        
+        <tr>
           <td colspan="2">
             <label>Num. de Clusters: </label>
             <select name="num_cluster" id="num_cluster">
@@ -70,6 +79,7 @@
   <!-- Cluster -->  
 
   <script>
+      var var cont_vehiculos=0;
 
     function nn(){
 
@@ -287,7 +297,7 @@
           Icon_trailer      = new Icon_data({iconUrl: "{{ asset('img/images/p13.png') }}"}),
           Icon_camion       = new Icon_data({iconUrl: "{{ asset('img/images/p14.png') }}"}),
           Icon_empresarial  = new Icon_data({iconUrl: "{{ asset('img/images/p15.png') }}"}),
-          Icon_limite2       = new Icon_all({iconUrl: "{{ asset('img/images/limite_data.png') }}"}),
+          Icon_limite2       = new Icon_all({iconUrl: "{{ asset('img/images/marker_data.png') }}"}),
           Icon_limite       = new Icon_all({iconUrl: "{{ asset('img/images/limite.png') }}"});
       L.icon                = function (options) {return new L.Icon(options);};    
       /*
@@ -305,7 +315,7 @@
         var arr_puntos7     = new Array();
         var layerControl    = false;
         var count_cordenada = cordenada.length;
-        var cont_vehiculos=0;
+        
         for(i=0;i<count_cordenada;i++)
         {
           if(cordenada[i][0]==1)
@@ -379,10 +389,7 @@
                     .addOverlay(puntos_mapa4,"Moto--------------->"+arr_puntos4.length)
                     .addOverlay(puntos_mapa5,"Camión----------->"+arr_puntos5.length)
                     .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
-                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
-                    
-        swal("Total de vehículos: ", ""+cont_vehiculos+"");
-        
+                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);                                    
       }
 
       function insert_python(cordenada2){
@@ -406,7 +413,7 @@
             url: "ajax_carga_data_insert",
             data: {'jObject':jObject,'obj_us':obj_us},
             beforeSend: function () {
-              swal("Ingresando los vehículos a la base de datos!");
+              swal("Total de vehículos: "+cont_vehiculos, "Ingresando los vehículos a la base de datos!");              
               console.log("cargando...");                
               document.getElementById('imagen').style.visibility = 'visible';
             },            
