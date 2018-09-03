@@ -285,7 +285,7 @@
           Icon_trailer      = new Icon_data({iconUrl: "{{ asset('img/images/p13.png') }}"}),
           Icon_camion       = new Icon_data({iconUrl: "{{ asset('img/images/p14.png') }}"}),
           Icon_empresarial  = new Icon_data({iconUrl: "{{ asset('img/images/p15.png') }}"}),
-          Icon_limite       = new Icon_all({iconUrl: "{{ asset('img/images/limite.png') }}"});
+          Icon_limite       = new Icon_all({iconUrl: "{{ asset('img/images/limite.png') }}"}),
           Icon_limite2       = new Icon_all({iconUrl: "{{ asset('img/images/marker_data.png') }}"});
       L.icon                = function (options) {return new L.Icon(options);};    
       /*
