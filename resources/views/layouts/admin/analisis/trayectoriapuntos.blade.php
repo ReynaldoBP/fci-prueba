@@ -15,6 +15,15 @@
           <td><input type="datetime-local" name="fecha_desde" id="fecha_desde"></td>        
         </tr>
         <tr>
+          <td colspan="2">  
+            <label>Base de datos: </label>
+            <select name="bd" id="bd">
+            <option value="1">Base de datos simulada </option>
+            <option value="2">Base de datos real </option>                    
+            </select>
+          </td>            
+        </tr>
+        <tr>
         <td colspan="2">
             <label>Num. de Clusters: </label>
             <select name="num_cluster" id="num_cluster">
@@ -81,6 +90,7 @@
                }
             });
     }  
+      var var cont_vehiculos=0;
       var bandera_analisis;      
       var latlngs      = new Array();
       var latlngs_data = new Array();
@@ -276,6 +286,7 @@
           Icon_camion       = new Icon_data({iconUrl: "{{ asset('img/images/p14.png') }}"}),
           Icon_empresarial  = new Icon_data({iconUrl: "{{ asset('img/images/p15.png') }}"}),
           Icon_limite       = new Icon_all({iconUrl: "{{ asset('img/images/limite.png') }}"});
+          Icon_limite2       = new Icon_all({iconUrl: "{{ asset('img/images/marker_data.png') }}"});
       L.icon                = function (options) {return new L.Icon(options);};    
       /*
       *Funcion que se encarga en la clasificacion de los vehiculos
@@ -291,8 +302,7 @@
         var arr_puntos6     = new Array();
         var arr_puntos7     = new Array();
         var layerControl    = false;
-        var count_cordenada = cordenada.length;
-        var cont_vehiculos=0;
+        var count_cordenada = cordenada.length;        
         for(i=0;i<count_cordenada;i++)
         {
           if(cordenada[i][0]==1)
@@ -365,10 +375,7 @@
                     .addOverlay(puntos_mapa4,"Moto--------------->"+arr_puntos4.length)
                     .addOverlay(puntos_mapa5,"Camión----------->"+arr_puntos5.length)
                     .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
-                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
-                    
-        swal("Total de vehículos: ", ""+cont_vehiculos+"");
-        
+                    .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);        
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
@@ -513,7 +520,7 @@
             url: "ajax_carga_data_insert2",
             data: {'jObject':jObject,'obj_us':obj_us},
             beforeSend: function () {
-              swal("Ingresando los vehículos a la base de datos!");
+              swal("Total de vehículos: "+cont_vehiculos, "Ingresando los vehículos a la base de datos!");              
               console.log("cargando...");                
               document.getElementById('imagen').style.visibility = 'visible';
             },            
