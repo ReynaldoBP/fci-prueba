@@ -268,7 +268,31 @@ class AdminController extends Controller
         $array11=json_encode($test1);
         return response($array11);
    }     
-   
+   public function ajax_python(Request $resquest, $usuario, $cluster){
+        $a=array();
+        $linea = 0;
+        $archivo = fopen("C:/Users/jcheverria/Desktop/Jorge Cheverria/fci/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/centroides-KmeanCal.csv", "r");
+        while (($datos = fgetcsv($archivo, ",")) == true) 
+        {
+          $num = count($datos);
+
+          $linea++;
+          if($linea>1){
+
+          //echo $datos[1];
+          
+          //echo $datos[2];
+          array_push($a,$datos[1]);
+          array_push($a,$datos[2]);
+          }
+        }
+        //echo "string";
+        //dd($a);
+        //Cerramos el archivo
+        fclose($archivo);
+        $array11=json_encode("a");
+        return response($a);
+   }
     public function ajax_carga_data_insert()
    {    
        //$conn_string = "host='52.38.27.79' port='5432' dbname='datos_gye' user='postgres' password='admin1234'";
