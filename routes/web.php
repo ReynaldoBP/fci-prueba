@@ -90,6 +90,10 @@ Route::get('listado_parametro/{page?}', 'ParametroController@listado_parametro')
 Route::get('form_editar_parametro/{id_parametro}', 'ParametroController@form_editar_parametro');
 Route::post('editar_parametro', 'ParametroController@editar_parametro');
 
+#python
+Route::get('admin/analisis/ajax_python/{usuario}/{num_cluster}', 'AdminController@ajax_python');
+
+
 #carto DB
 Route::get('admin/analisis/cartodb1', 'AdminController@cartodb1');
 Route::get('admin/analisis/cartodb2', 'AdminController@cartodb2');

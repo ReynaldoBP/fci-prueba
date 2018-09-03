@@ -37,7 +37,7 @@
         </tr>          
         <tr>        
           <td align="r" colspan="2">
-            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  align="center" onclick="carga_puntos_map();"/>            
+            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  align="center" onclick="carga_puntos_map();nn();"/>            
             <input class="btn btn-sm btn-success" type="button" value="Analisis"   name="bt_analisis" align="center" onclick="ajax_r();"/>
             <input class="btn btn-sm btn-danger" type="button" value="Actualizar" name="bt_limpiar"  align="center" onclick="window.location.reload()"/>
             
@@ -69,6 +69,26 @@
   <!-- Cluster -->  
 
   <script>
+
+    function nn(){
+
+                $.ajax(
+            {
+              type:"GET",
+              url: "ajax_python/1/1",              
+              success: function(result)
+              {
+              console.log(result); 
+                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+              var newcoor2       = new Array();
+                newcoor2[0]    = result[0];
+                newcoor2[1]    = result[1];
+              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng); 
+
+
+              }
+            });
+    }
       var bandera_analisis;
       var latlngs      = new Array();
       var latlngs_data = new Array();
@@ -172,6 +192,7 @@
       */
       function distancia(map, latlngA, latlngB) 
       {
+
           return map.latLngToLayerPoint(latlngA).distanceTo(map.latLngToLayerPoint(latlngB));
       }
       /*
@@ -209,8 +230,13 @@
                   latlngs_data.push(point_data);                  
                 }
               }
+
+
               capa_point(latlngs_data);
-              insertar_datos(latlngs_data,usuario);
+              //insert_python(latlngs_data2);
+              //(insertar_datos(latlngs_data,usuario);
+
+
             },
            error:function(result){
             alert("Error en la carga masiva de datos.");
@@ -252,6 +278,7 @@
           Icon_trailer      = new Icon_data({iconUrl: "{{ asset('img/images/p13.png') }}"}),
           Icon_camion       = new Icon_data({iconUrl: "{{ asset('img/images/p14.png') }}"}),
           Icon_empresarial  = new Icon_data({iconUrl: "{{ asset('img/images/p15.png') }}"}),
+          Icon_limite2       = new Icon_all({iconUrl: "{{ asset('img/images/limite_data.png') }}"}),
           Icon_limite       = new Icon_all({iconUrl: "{{ asset('img/images/limite.png') }}"});
       L.icon                = function (options) {return new L.Icon(options);};    
       /*
@@ -312,6 +339,9 @@
             arr_puntos7.push(L.marker([cordenada[i][1],cordenada[i][2]], {icon: Icon_furgoneta}));    
             cont_vehiculos++;        
           }
+
+
+
         }
         if(layerControl === false) {
           layerControl = L.control.layers().addTo(mymap);
@@ -346,6 +376,14 @@
                     
         alert("Total de vehiculos: "+cont_vehiculos);
         
+      }
+
+      function insert_python(cordenada2){
+          
+              var newcoor2       = new Array();
+                newcoor2[0]    = -2.186146;
+                newcoor2[1]    = -79.895689;
+              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng);        
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
