@@ -33,7 +33,7 @@
         </tr>
         <tr>        
           <td align="r" colspan="2">
-            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  id="bt_aceptar"  align="center" onclick="carga_puntos_map();nn();"/>
+            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  id="bt_aceptar"  align="center" onclick="carga_puntos_map();"/>
             <input class="btn btn-sm btn-success" type="button" value="Analisis"   name="bt_analisis" id="bt_analisis" align="center" onclick="ajax_r();"/>  
             <input class="btn btn-sm btn-danger" type="button" value="Actualizar"  name="bt_limpiar"  align="center" onclick="window.location.reload()"/>            
           </td>        
@@ -41,7 +41,7 @@
       </table>
     </form>
 
-    <img src="" id="imagen" class="img-responsive" style="height: 450px;">
+    <img src="{{ asset('img/images/cargando_ajax.gif') }}" id="imagen" class="img-responsive" style="height: 450px;visibility: hidden;">
     <?php
       if (isset($_POST['bt_aceptar']))
       {
@@ -59,31 +59,11 @@
     crossorigin=""></script>
     
   <script src="{{ asset('js/analisis/jquery-3.3.1.min.js') }}"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- OSM -->
   <!-- Cluster -->
  
   <script>      
-
-    function nn(){
-
-                $.ajax(
-            {
-              type:"GET",
-              url: "ajax_python/1/1",              
-              success: function(result)
-              {
-              console.log(result); 
-                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
-              var newcoor2       = new Array();
-                newcoor2[0]    = result[0];
-                newcoor2[1]    = result[1];
-              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng); 
-
-
-              }
-            });
-    }
-    
       var bandera_analisis;      
       var latlngs      = new Array();
       var latlngs_data = new Array();
@@ -118,11 +98,11 @@
         {
           if(lvl_zoom>16)
           {
-            window.alert("Por favor aléjese más.");
+            swal("", "Por favor aléjese más!", "success",{icon: "warning",});
           }
           else if(lvl_zoom<16)
           {
-            alert("Por favor acérquese más.");
+            swal("", "Por favor acérquese más!", "success",{icon: "warning",});
           }
           else if(lvl_zoom==16)
           {
@@ -158,25 +138,25 @@
       *Funcion que se encarga de enviar los parametros necesarios para la carga masiva de puntos, mediante el uso de ajax.
       */
       function carga_puntos_map()
-      {
-        bandera_analisis=true;
-        
+      {                
         fecha_desde  = $('#fecha_desde').val();
         latlngA      = arr_lat_lng[0];
         latlngB      = arr_lat_lng[1];
 
         if(fecha_desde!="" && (latlngA!=null && latlngB!=null) && cont_funcion==0)
         {        
+          bandera_analisis=true;
+          swal("Datos correctos!", "", "success");
           cont_funcion = cont_funcion+1;
           carga_puntos(latlngA,latlngB,fecha_desde);
         }
         else if(fecha_desde=="")
         {
-          alert("Ingrese los valores de las fechas.");        
+          swal("", "Ingrese el valor de la fecha!", "success",{icon: "warning",});          
         }
         else if(latlngA==null || latlngB==null)
         {
-          alert("Ingrese los Marcadores.");
+          swal("", "Limite la zona, por favor!", "success",{icon: "warning",}); 
         }      
       }
       /*
@@ -192,41 +172,54 @@
       *Funcion que se encarga en realizar la carga masiva.
       */
     function carga_puntos(latlngA,latlngB,fecha_desde)
-      {
+      {        
         $.ajax(
           {
             type:"GET",
             url: "ajax_carga_data2/" + fecha_desde,
+            beforeSend: function () {
+                console.log("cargando...");                
+                document.getElementById('imagen').style.visibility = 'visible';
+              },
             success: function(result)
-            {              
-            var JsonResult   = result;
-            var count_result=result.latlngs.length;
-            //console.log(result.latlngs.length);
-              for(i=0;i<count_result;i++)
-              {
-                var id_user    = JsonResult.latlngs[i][0];//ID user
-                var lat_d      = JsonResult.latlngs[i][1];//latitud
-                var lng_d      = JsonResult.latlngs[i][2];//longitud
-                //Valida si los puntos extraidos en la base de datos existen en la limitacion de la zona.
-                var point      = new L.LatLng(lat_d,lng_d);
-                var tolerance  = tolerance === undefined ? 0.2 : tolerance;
-                var hypotenuse = latlngA.distanceTo(latlngB),
-                delta          = latlngA.distanceTo(point) + point.distanceTo(latlngB) - hypotenuse;
-                var result     = delta/hypotenuse < tolerance
-                if(result)
-                {               
-                  var point_data    = new Array();
-                      point_data[0] = id_user;
-                      point_data[1] = lat_d;
-                      point_data[2] = lng_d;
-                  latlngs_data.push(point_data);                                    
+            {
+              document.getElementById('imagen').style.visibility = 'hidden';
+              var JsonResult   = result;
+              var count_result=result.latlngs.length;
+                for(i=0;i<count_result;i++)
+                {
+                  var id_user    = JsonResult.latlngs[i][0];//ID user
+                  var lat_d      = JsonResult.latlngs[i][1];//latitud
+                  var lng_d      = JsonResult.latlngs[i][2];//longitud
+                  //Valida si los puntos extraidos en la base de datos existen en la limitacion de la zona.
+                  var point      = new L.LatLng(lat_d,lng_d);
+                  var tolerance  = tolerance === undefined ? 0.2 : tolerance;
+                  var hypotenuse = latlngA.distanceTo(latlngB),
+                  delta          = latlngA.distanceTo(point) + point.distanceTo(latlngB) - hypotenuse;
+                  var result     = delta/hypotenuse < tolerance
+                  if(result)
+                  {
+                    var point_data    = new Array();
+                        point_data[0] = id_user;
+                        point_data[1] = lat_d;
+                        point_data[2] = lng_d;
+                    latlngs_data.push(point_data);                                    
+                  }
+                }                              
+                if(latlngs_data.length>0)
+                {              
+                  capa_point(latlngs_data);
+                  insertar_datos(latlngs_data,usuario);
                 }
-              }              
-              capa_point(latlngs_data);
-              insertar_datos(latlngs_data,usuario);
+                else
+                {
+                  swal("No existen datos", "Actualice y límite otro lugar por favor.!", "success",{icon: "warning",});
+                  document.getElementById('imagen').style.visibility = 'hidden';
+                }
             },
            error:function(result){
-            alert("Error en la carga masiva de datos.");
+            swal("", "Error en la carga masiva de datos.!", "success",{icon: "warning",});
+            document.getElementById('imagen').style.visibility = 'hidden';
            }
           });
       }
@@ -357,31 +350,60 @@
                     .addOverlay(puntos_mapa6,"Camioneta------->"+arr_puntos6.length)
                     .addOverlay(puntos_mapa7,"Expreso---------->"+arr_puntos7.length);
                     
-        alert("Total de vehiculos: "+cont_vehiculos);
+        swal("Total de vehículos: ", ""+cont_vehiculos+"");
         
       }
       /*
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */
       function ajax_r()
-      {        
+      {
         if (bandera_analisis==true)
-        {
-          num_cluster = $('#num_cluster').val();
+        {                          
+
+          num_cluster = $('#num_cluster').val();          
           $.ajax(
             {
               type:"GET",
-              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,              
+              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,
+              cache: false,
+              beforeSend: function () {
+                console.log(document.getElementById('imagen').style.visibility);
+                console.log("cargando...");                
+
+                if(document.getElementById('imagen').style.visibility!='hidden')
+                {            
+                  var imagen=document.getElementById('imagen').src = "{{ asset('img/images/cargando_ajax.gif') }}";
+                  console.log(imagen);
+                  document.getElementById('imagen').style.visibility = 'visible';                  
+                }else{
+                  document.getElementById('imagen').style.visibility = 'visible';
+                }                
+              },
               success: function(result)
-              {
-              console.log(result); 
-                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
-              }
-            });
+              {                                
+                console.log(result); 
+                if(result)
+                {
+                  document.getElementById('imagen').style.visibility = 'visible';
+                  swal("", "Se cargaron los datos exitosamente!", "success");
+                  var imagen=document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+                }
+                else
+                {
+                  swal("", "Error al generar el análisis.!", "success",{icon: "warning",});
+                  document.getElementById('imagen').style.visibility = 'hidden';    
+                }                
+              },
+           error:function(result){
+            swal("", "Error al generar el análisis.!", "success",{icon: "warning",});
+            document.getElementById('imagen').style.visibility = 'hidden';
+           }
+            });            
         }
         else
-        {
-          alert("Por favor primero indique la zona donde desea realizar el analisis.");
+        {          
+          swal("", "Por favor primero, indique la zona donde desea realizar el analisis!", "success",{icon: "warning",});
         }        
       }
   </script>
@@ -464,7 +486,7 @@
           });
       }
       function insertar_datos(coordenada,usuario)
-      {        
+      {                
         jObject= JSON.stringify(coordenada);
         obj_us= JSON.stringify(usuario);
         console.log(jObject);
@@ -473,14 +495,27 @@
             type: "POST",            
             url: "ajax_carga_data_insert2",
             data: {'jObject':jObject,'obj_us':obj_us},
-            
+            beforeSend: function () {
+              swal("Ingresando los vehículos a la base de datos!");
+              console.log("cargando...");                
+              document.getElementById('imagen').style.visibility = 'visible';
+            },            
             success: function(result)
-            {              
+            {
+              document.getElementById('imagen').style.visibility = 'hidden';              
               var JsonResult   = result;   
               console.log(JsonResult);
-            }
+            },
+            complete: function(result) {
+              swal("", "Se cargaron los datos exitosamente!", "success");
+            },
+           error:function(result){
+            swal("", "Error en el ingreso de carga masiva de datos.!", "success",{icon: "warning",});
+            document.getElementById('imagen').style.visibility = 'hidden';
+           }
+
           });
-      }        
+      }   
 </script>
 </div>
 
