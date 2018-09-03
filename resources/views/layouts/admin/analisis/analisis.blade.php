@@ -46,7 +46,7 @@
       </table>
     </form>
 
-    <img src="" id="imagen" class="img-responsive" style="height: 450px;">
+    <img src="{{ asset('img/images/cargando_ajax.gif') }}" id="imagen" class="img-responsive" style="height: 450px;visibility: hidden;">
     <?php
       if (isset($_POST['bt_aceptar']))
       {
@@ -204,9 +204,13 @@
           {
             type:"GET",
             url: "ajax_carga_data/" + fecha_desde + "/" + fecha_hasta,
-
+            beforeSend: function () {
+                console.log("cargando...");                
+                document.getElementById('imagen').style.visibility = 'visible';
+              },
             success: function(result)
-            {
+            {              
+              document.getElementById('imagen').style.visibility = 'hidden';
             var JsonResult   = result;                   
             var count_result=result.latlngs.length;
             console.log(result.latlngs.length);
@@ -234,7 +238,7 @@
 
               capa_point(latlngs_data);
               //insert_python(latlngs_data2);
-              //(insertar_datos(latlngs_data,usuario);
+              insertar_datos(latlngs_data,usuario);
 
 
             },
@@ -399,8 +403,13 @@
             url: "ajax_carga_data_insert",
             data: {'jObject':jObject,'obj_us':obj_us},
             
+            beforeSend: function () {
+                console.log("cargando...");                
+                document.getElementById('imagen').style.visibility = 'visible';
+              },            
             success: function(result)
             {              
+              document.getElementById('imagen').style.visibility = 'hidden';            
               var JsonResult   = result;   
               console.log(JsonResult);
             }
@@ -419,20 +428,38 @@
           });
       }
       function ajax_r()
-      {        
+      {
         if (bandera_analisis==true)
-        {
-          num_cluster = $('#num_cluster').val();
+        {                          
+
+          num_cluster = $('#num_cluster').val();          
           $.ajax(
             {
               type:"GET",
-              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,              
+              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,
+              cache: false,
+              beforeSend: function () {
+                console.log(document.getElementById('imagen').style.visibility);
+                console.log("cargando...");                
+
+                if(document.getElementById('imagen').style.visibility!='hidden')
+                {            
+                  var imagen=document.getElementById('imagen').src = "{{ asset('img/images/cargando_ajax.gif') }}";
+                  console.log(imagen);
+                  document.getElementById('imagen').style.visibility = 'visible';
+                  
+                }else{
+                  document.getElementById('imagen').style.visibility = 'visible';
+                }                
+              },
               success: function(result)
-              {
-              console.log(result); 
-                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+              {                
+                document.getElementById('imagen').style.visibility = 'visible';
+                console.log(result); 
+                var imagen=document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";                                
               }
             });
+            
         }
         else
         {
