@@ -42,7 +42,7 @@
         </tr>
         <tr>        
           <td align="r" colspan="2">
-            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  id="bt_aceptar"  align="center" onclick="carga_puntos_map();nn();"/>
+            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  id="bt_aceptar"  align="center" onclick="carga_puntos_map();"/>
             <input class="btn btn-sm btn-success" type="button" value="Analisis"   name="bt_analisis" id="bt_analisis" align="center" onclick="ajax_r();"/>  
             <input class="btn btn-sm btn-danger" type="button" value="Actualizar"  name="bt_limpiar"  align="center" onclick="window.location.reload()"/>            
           </td>        
@@ -87,7 +87,10 @@
                 newcoor2[0]    = result[0];
                 newcoor2[1]    = result[1];
               L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng); 
-               }
+               },
+           error:function(result){
+            swal("", "Error al generar el análisis.!", "success",{icon: "warning",});            
+           }
             });
     }  
       var var cont_vehiculos=0;
@@ -532,6 +535,7 @@
             },
             complete: function(result) {
               swal("", "Se cargaron los datos exitosamente!", "success");
+              nn();
             },
            error:function(result){
             swal("", "Error en el ingreso de carga masiva de datos.!", "success",{icon: "warning",});
