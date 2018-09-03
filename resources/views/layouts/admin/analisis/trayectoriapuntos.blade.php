@@ -33,7 +33,7 @@
         </tr>
         <tr>        
           <td align="r" colspan="2">
-            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  id="bt_aceptar"  align="center" onclick="carga_puntos_map();"/>
+            <input class="btn btn-sm btn-primary" type="button" value="Aceptar"    name="bt_aceptar"  id="bt_aceptar"  align="center" onclick="carga_puntos_map();nn();"/>
             <input class="btn btn-sm btn-success" type="button" value="Analisis"   name="bt_analisis" id="bt_analisis" align="center" onclick="ajax_r();"/>  
             <input class="btn btn-sm btn-danger" type="button" value="Actualizar"  name="bt_limpiar"  align="center" onclick="window.location.reload()"/>            
           </td>        
@@ -63,6 +63,27 @@
   <!-- Cluster -->
  
   <script>      
+
+    function nn(){
+
+                $.ajax(
+            {
+              type:"GET",
+              url: "ajax_python/1/1",              
+              success: function(result)
+              {
+              console.log(result); 
+                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+              var newcoor2       = new Array();
+                newcoor2[0]    = result[0];
+                newcoor2[1]    = result[1];
+              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng); 
+
+
+              }
+            });
+    }
+    
       var bandera_analisis;      
       var latlngs      = new Array();
       var latlngs_data = new Array();
