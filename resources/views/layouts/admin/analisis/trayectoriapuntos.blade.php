@@ -41,7 +41,7 @@
       </table>
     </form>
 
-    <img src="" id="imagen" class="img-responsive" style="height: 450px;">
+    <img src="{{ asset('img/images/cargando_ajax.gif') }}" id="imagen" class="img-responsive" style="height: 450px;visibility: hidden;">
     <?php
       if (isset($_POST['bt_aceptar']))
       {
@@ -176,8 +176,13 @@
           {
             type:"GET",
             url: "ajax_carga_data2/" + fecha_desde,
+            beforeSend: function () {
+                console.log("cargando...");                
+                document.getElementById('imagen').style.visibility = 'visible';
+              },
             success: function(result)
             {              
+              document.getElementById('imagen').style.visibility = 'hidden';            
             var JsonResult   = result;
             var count_result=result.latlngs.length;
             //console.log(result.latlngs.length);
@@ -343,20 +348,38 @@
       *Funcion que se encarga en ingresar los datos necesarios para el analisis kmeans.
       */
       function ajax_r()
-      {        
+      {
         if (bandera_analisis==true)
-        {
-          num_cluster = $('#num_cluster').val();
+        {                          
+
+          num_cluster = $('#num_cluster').val();          
           $.ajax(
             {
               type:"GET",
-              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,              
+              url: "ajax_r_analisis/"+usuario+"/"+num_cluster,
+              cache: false,
+              beforeSend: function () {
+                console.log(document.getElementById('imagen').style.visibility);
+                console.log("cargando...");                
+
+                if(document.getElementById('imagen').style.visibility!='hidden')
+                {            
+                  var imagen=document.getElementById('imagen').src = "{{ asset('img/images/cargando_ajax.gif') }}";
+                  console.log(imagen);
+                  document.getElementById('imagen').style.visibility = 'visible';
+                  
+                }else{
+                  document.getElementById('imagen').style.visibility = 'visible';
+                }                
+              },
               success: function(result)
-              {
-              console.log(result); 
-                var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+              {                
+                document.getElementById('imagen').style.visibility = 'visible';
+                console.log(result); 
+                var imagen=document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";                                
               }
             });
+            
         }
         else
         {
@@ -444,6 +467,7 @@
       }
       function insertar_datos(coordenada,usuario)
       {        
+        alert("Ingresando a la base de datos.");
         jObject= JSON.stringify(coordenada);
         obj_us= JSON.stringify(usuario);
         console.log(jObject);
@@ -452,14 +476,18 @@
             type: "POST",            
             url: "ajax_carga_data_insert2",
             data: {'jObject':jObject,'obj_us':obj_us},
-            
+            beforeSend: function () {
+                console.log("cargando...");                
+                document.getElementById('imagen').style.visibility = 'visible';
+              },            
             success: function(result)
             {              
+              document.getElementById('imagen').style.visibility = 'hidden';              
               var JsonResult   = result;   
               console.log(JsonResult);
             }
           });
-      }        
+      }
 </script>
 </div>
 
