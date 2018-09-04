@@ -27,7 +27,7 @@ import requests
 
 #CONEXION CON LA BASE DE DATOS GYE
 conn2 = pg.connect(database='gye_datoss', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
-df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist limit 5000 ",conn2)
+df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist ",conn2)
 coords = df.as_matrix(columns=['longitud', 'latitud'])
 
 
@@ -71,9 +71,9 @@ rep_points
 # In[5]:
 
 
-rep_points.to_csv('data/DbScan/centroides-dbscanCal.csv', encoding='utf-8')
-algo.to_csv('data/DbScan/clustes-dbscancal.csv', encoding='utf-8')
-df.to_csv('data/DbScan/DataSetCal.csv', encoding='utf-8')
+rep_points.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/DbScan/centroides-dbscanCal.csv', encoding='utf-8')
+algo.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/DbScan/clustes-dbscancal.csv', encoding='utf-8')
+df.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/DbScan/DataSetCal.csv', encoding='utf-8')
 
 
 # In[6]:
@@ -110,6 +110,6 @@ message = 'Agrupado {:,} puntos hasta {:,} clústeres, para {:.1f}% compresión 
 print(message.format(len(df), num_clusters, 100*(1 - float(num_clusters) / len(df)), time.time()-st))
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('/var/www/html/fci-prueba/img/images/dbScanCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig('/var/www/html/fci-prueba/public/img/images/dbScanCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
 plt.show()
 
