@@ -20,7 +20,7 @@ import pandas.io.sql as psql
 
 
 conn = pg.connect(database='gye_datoss', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
-df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist limit 5000",conn)
+df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist ",conn)
 coords = df.as_matrix(columns=['longitud', 'latitud'])
 
 
@@ -43,8 +43,8 @@ result = compute_centers(ward,coords)
 lats, lons = zip(*result)
 #centroids = AgglomerativeClustering.cluster_centers
 rep_points = pd.DataFrame({'longitud':lons, 'latitud':lats})
-rep_points.to_csv('data/HCne/centroides-HCne.csv', encoding='utf-8')
-df.to_csv('data/HCne/DataSetCal.csv', encoding='utf-8')
+rep_points.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCne/centroides-HCne.csv', encoding='utf-8')
+df.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCne/DataSetCal.csv', encoding='utf-8')
 rep_points
 
 
@@ -79,6 +79,6 @@ print("Número de puntos: %i" % labels.size)
 
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('/var/www/html/fci-prueba/img/images/HCNE.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig('/var/www/html/fci-prueba/public/img/images/HCNE.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
 plt.show()
 
