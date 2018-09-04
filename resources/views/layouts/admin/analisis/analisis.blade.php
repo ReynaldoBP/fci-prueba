@@ -107,43 +107,7 @@
 </dir>
   <script>
       var cont_vehiculos=0;
-
-    function nn(algoritmo){
-
-                $.ajax(
-            {
-              type:"GET",
-              url: "ajax_python/1/1/"+algoritmo,              
-              success: function(result)
-              {
-              console.log(result); 
-                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
-              var newcoor2       = new Array();
-                newcoor2[0]    = result[0];
-                newcoor2[1]    = result[1];
-              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[0]+" lng: "+result[1]+" Algoritmo:  "+result[6]); 
-
-              console.log(result); 
-                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
-              var newcoor3       = new Array();
-                newcoor3[0]    = result[2];
-                newcoor3[1]    = result[3];
-              L.marker(newcoor3, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[2]+" lng: "+result[3]+" Algoritmo:  "+result[6]); 
-
-
-              console.log(result); 
-                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
-              var newcoor4       = new Array();
-                newcoor4[0]    = result[4];
-                newcoor4[1]    = result[5];
-              L.marker(newcoor4, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[4]+" lng: "+result[5]+" Algoritmo:  "+result[6]); 
-
-              },
-           error:function(result){
-            swal("", "Error al generar el análisis.!", "success",{icon: "warning",});
-            }
-            });
-    }
+      var bandera_historica;
       var bandera_analisis;
       var latlngs      = new Array();
       var latlngs_data = new Array();
@@ -469,7 +433,7 @@
             },
             complete: function(result) {
               swal("", "Se cargaron los datos exitosamente!", "success");
-              nn();
+              bandera_historica=true;
             },
            error:function(result){
             swal("", "Error en el ingreso de carga masiva de datos.!", "success",{icon: "warning",});
@@ -478,6 +442,66 @@
 
           });
       }   
+    /*
+    *Funcion que se encarga de pintar marcadores en el mapa de acuerdo a los centroide de cada analisis.
+    */        
+    function nn(algoritmo)
+    {      
+      if(bandera_historica==true)
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python/1/1/"+algoritmo,              
+            success: function(result)
+            {
+              console.log(result); 
+              var count_result=result.length;
+              for(i=1;i<count_result+1;i++)
+              {
+                if (i%2==0)
+                {
+                  var newcoor2   = new Array();
+                  newcoor2[0]    = result[i-2];
+                  newcoor2[1]    = result[i-1];
+                  if(algoritmo==1){L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Análisis Kmeans");}
+                  if(algoritmo==2){L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Análisis Dbscan");}
+                  if(algoritmo==3){L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Análisis Hcn");}
+                  if(algoritmo==4){L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Análisis Hcne");}                  
+                }               
+              }
+              /*
+                var newcoor2       = new Array();
+                  newcoor2[0]    = result[0];
+                  newcoor2[1]    = result[1];
+                L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[0]+" lng: "+result[1]+" Algoritmo:  "+result[6]); 
+
+                console.log(result); 
+
+                var newcoor3       = new Array();
+                  newcoor3[0]    = result[2];
+                  newcoor3[1]    = result[3];
+                L.marker(newcoor3, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[2]+" lng: "+result[3]+" Algoritmo:  "+result[6]); 
+
+
+                console.log(result); 
+
+                var newcoor4       = new Array();
+                  newcoor4[0]    = result[4];
+                  newcoor4[1]    = result[5];
+                L.marker(newcoor4, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[4]+" lng: "+result[5]+" Algoritmo:  "+result[6]); 
+              */
+            },
+            error:function(result){
+              swal("", "Error al generar el análisis.!", "success",{icon: "warning",});
+            }
+          });      
+      }
+      else
+      {
+        swal("", "Por favor espere a que se ingresen los vehiculos!", "success",{icon: "warning",});
+      }  
+    }      
       function insertar(id,descripcion,latitud)
       {
         $.ajax(
@@ -597,6 +621,7 @@
       }
       function insertar_datos(coordenada,usuario)
       {                
+        bandera_historica=true;
         jObject= JSON.stringify(coordenada);
         obj_us= JSON.stringify(usuario);
         console.log(jObject);
@@ -617,8 +642,7 @@
               console.log(JsonResult);
             },
             complete: function(result) {
-              swal("", "Se cargaron los datos exitosamente!", "success");
-              nn();
+              swal("", "Se cargaron los datos exitosamente!", "success");              
             },
            error:function(result){
             swal("", "Error en el ingreso de carga masiva de datos.!", "success",{icon: "warning",});
