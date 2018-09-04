@@ -93,7 +93,7 @@
            }
             });
     }  
-      var var cont_vehiculos=0;
+      var cont_vehiculos=0;
       var bandera_analisis;      
       var latlngs      = new Array();
       var latlngs_data = new Array();
