@@ -20,7 +20,7 @@ import requests
 
 
 np.random.seed(2)
-conn = pg.connect(database='datos_gye', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
+conn = pg.connect(database='gye_datoss', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
 df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist limit 5000",conn)
 coords = df.as_matrix(columns=['longitud', 'latitud']) # se consulta estos campos
 #pandas libreria de reporteria
@@ -85,6 +85,6 @@ print("Tiempo transcurrido: %.2fs" % elapsed_time)
 print("Número de puntos: %i" % labels.size)
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('images/KmeansCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1) #me guarda el grafico como imagen
+plt.savefig('/var/www/html/fci-prueba/img/images/KmeansCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1) #me guarda el grafico como imagen
 plt.show()
 

@@ -85,6 +85,6 @@ print("Numero de clusters: %i" % num_clusters)
 
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('images/HCES.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig('/var/www/html/fci-prueba/img/images/HCES.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
 plt.show()
 

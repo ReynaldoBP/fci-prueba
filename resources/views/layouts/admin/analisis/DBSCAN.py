@@ -110,6 +110,6 @@ message = 'Agrupado {:,} puntos hasta {:,} clústeres, para {:.1f}% compresión 
 print(message.format(len(df), num_clusters, 100*(1 - float(num_clusters) / len(df)), time.time()-st))
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('images/dbScanCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig('/var/www/html/fci-prueba/img/images/dbScanCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
 plt.show()
 

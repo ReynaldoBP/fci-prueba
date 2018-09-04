@@ -54,10 +54,10 @@
         </tr>
         <tr>        
           <td align="r" colspan="2">
-            <input class="btn btn-sm btn-warning" type="button" value="KMEANS"    name="bt_kmean"  id="bt_kmean"  align="center" onclick="nn();"/>
-            <input class="btn btn-sm btn-warning" type="button" value="DBSCAN"    name="bt_dbscan"  id="bt_dbscan"  align="center" onclick="nn();"/>
-            <input class="btn btn-sm btn-warning" type="button" value="HCN"    name="bt_hcn"  id="bt_hcn"  align="center" onclick="nn();"/>
-            <input class="btn btn-sm btn-warning" type="button" value="HCNE"    name="bt_hcne"  id="bt_hcne"  align="center" onclick="nn();"/>         
+            <input class="btn btn-sm btn-warning" type="button" value="KMEANS"    name="bt_kmean"  id="bt_kmean"  align="center" onclick="ajax_python1();nn(1);"/>
+            <input class="btn btn-sm btn-warning" type="button" value="DBSCAN"    name="bt_dbscan"  id="bt_dbscan"  align="center" onclick="ajax_python2();nn(2);"/>
+            <input class="btn btn-sm btn-warning" type="button" value="HCN"    name="bt_hcn"  id="bt_hcn"  align="center" onclick="nn(3);"/>
+            <input class="btn btn-sm btn-warning" type="button" value="HCNE"    name="bt_hcne"  id="bt_hcne"  align="center" onclick="nn(4);"/>         
           </td>        
         </tr>      
       </table>
@@ -85,16 +85,35 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <!-- OSM -->
   <!-- Cluster -->  
-
+<dir> 
+  <table>
+      <tr>
+        <th>
+               <img src="" id="imagen1" class="img-responsive" style="height: 450px;">
+        </th>
+        <th>
+            <img src="" id="imagen2" class="img-responsive" style="height: 450px;">
+        </th>
+      </tr>
+      <tr>
+        <th>
+              <img src="" id="imagen3" class="img-responsive" style="height: 450px;">
+        </th>
+        <th>
+          <img src="" id="imagen4" class="img-responsive" style="height: 450px;">
+        </th>
+      </tr>
+    </table>
+</dir>
   <script>
       var cont_vehiculos=0;
 
-    function nn(){
+    function nn(algoritmo){
 
                 $.ajax(
             {
               type:"GET",
-              url: "ajax_python/1/1/1",              
+              url: "ajax_python/1/1/"+algoritmo,              
               success: function(result)
               {
               console.log(result); 
@@ -102,7 +121,23 @@
               var newcoor2       = new Array();
                 newcoor2[0]    = result[0];
                 newcoor2[1]    = result[1];
-              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng); 
+              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[0]+" lng: "+result[1]+" Algoritmo:  "+result[6]); 
+
+              console.log(result); 
+                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+              var newcoor3       = new Array();
+                newcoor3[0]    = result[2];
+                newcoor3[1]    = result[3];
+              L.marker(newcoor3, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[2]+" lng: "+result[3]+" Algoritmo:  "+result[6]); 
+
+
+              console.log(result); 
+                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
+              var newcoor4       = new Array();
+                newcoor4[0]    = result[4];
+                newcoor4[1]    = result[5];
+              L.marker(newcoor4, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+result[4]+" lng: "+result[5]+" Algoritmo:  "+result[6]); 
+
               },
            error:function(result){
             swal("", "Error al generar el análisis.!", "success",{icon: "warning",});
@@ -506,6 +541,93 @@
       }
 
   </script>
+
+<script type="text/javascript">
+  function ajax_python1()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis1",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen1 = document.getElementById('imagen1').src = "{{ asset('img/images/dbScanCal.png') }}";
+            }
+          });
+      }
+  function ajax_python2()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis2",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen2 = document.getElementById('imagen2').src = "{{ asset('img/images/KmeansCal.png') }}";
+            }
+          });
+      }
+ function ajax_python3()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis2",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen3 = document.getElementById('imagen3').src = "{{ asset('img/images/HCES.png') }}";
+            }
+          });
+      } 
+ function ajax_python4()
+      {
+        $.ajax(
+          {
+            type:"GET",
+            url: "ajax_python_analisis2",
+            success: function(result)
+            {             
+            console.log(result); 
+              var imagen4 = document.getElementById('imagen4').src = "{{ asset('img/images/HCNE.png') }}";
+            }
+          });
+      }
+      function insertar_datos(coordenada,usuario)
+      {                
+        jObject= JSON.stringify(coordenada);
+        obj_us= JSON.stringify(usuario);
+        console.log(jObject);
+        $.ajax(
+          {
+            type: "POST",            
+            url: "ajax_carga_data_insert2",
+            data: {'jObject':jObject,'obj_us':obj_us},
+            beforeSend: function () {
+              swal("Total de vehículos: "+cont_vehiculos, "Ingresando los vehículos a la base de datos!");              
+              console.log("cargando...");                
+              document.getElementById('imagen').style.visibility = 'visible';
+            },            
+            success: function(result)
+            {
+              document.getElementById('imagen').style.visibility = 'hidden';              
+              var JsonResult   = result;   
+              console.log(JsonResult);
+            },
+            complete: function(result) {
+              swal("", "Se cargaron los datos exitosamente!", "success");
+              nn();
+            },
+           error:function(result){
+            swal("", "Error en el ingreso de carga masiva de datos.!", "success",{icon: "warning",});
+            document.getElementById('imagen').style.visibility = 'hidden';
+           }
+
+          });
+      }   
+</script>
     </div>
   </div>
 </div>  
