@@ -268,7 +268,10 @@ class AdminController extends Controller
         $array11=json_encode($test1);
         return response($array11);
    }     
-   public function ajax_python(Request $resquest, $usuario, $cluster){
+   public function ajax_python(Request $resquest, $usuario, $cluster,$algoritmo){
+
+        if($algoritmo==1){
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/kmean.py");
         $a=array();
         $linea = 0;
         $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/centroides-KmeanCal.csv", "r");
@@ -286,11 +289,72 @@ class AdminController extends Controller
           array_push($a,$datos[2]);
           }
         }
-        //echo "string";
-        //dd($a);
-        //Cerramos el archivo
         fclose($archivo);
-        $array11=json_encode("a");
+        }
+        if($algoritmo==2){
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
+        $a=array();
+        $linea = 0;
+        $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/DbScan/centroides-dbscanCal.csv", "r");
+        while (($datos = fgetcsv($archivo, ",")) == true) 
+        {
+          $num = count($datos);
+
+          $linea++;
+          if($linea>1){
+
+          //echo $datos[1];
+          
+          //echo $datos[2];
+          array_push($a,$datos[1]);
+          array_push($a,$datos[2]);
+          }
+        }
+        fclose($archivo);
+        }
+        if($algoritmo==3){
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
+        $a=array();
+        $linea = 0;
+        $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCe/centroides-HCe.csv", "r");
+        while (($datos = fgetcsv($archivo, ",")) == true) 
+        {
+          $num = count($datos);
+
+          $linea++;
+          if($linea>1){
+
+          //echo $datos[1];
+          
+          //echo $datos[2];
+          array_push($a,$datos[1]);
+          array_push($a,$datos[2]);
+          }
+        }
+        fclose($archivo);
+        }
+        if($algoritmo==4){
+        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCNE.py");
+        $a=array();
+        $linea = 0;
+        $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCne/centroides-HCne.csv", "r");
+        while (($datos = fgetcsv($archivo, ",")) == true) 
+        {
+          $num = count($datos);
+
+          $linea++;
+          if($linea>1){
+
+          //echo $datos[1];
+          
+          //echo $datos[2];
+          array_push($a,$datos[1]);
+          array_push($a,$datos[2]);
+          }
+        }
+        fclose($archivo);
+        }
+
         return response($a);
    }
     public function ajax_carga_data_insert()

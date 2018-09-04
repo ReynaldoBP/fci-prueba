@@ -94,7 +94,7 @@ Route::get('form_editar_parametro/{id_parametro}', 'ParametroController@form_edi
 Route::post('editar_parametro', 'ParametroController@editar_parametro');
 
 #python
-Route::get('admin/analisis/ajax_python/{usuario}/{num_cluster}', 'AdminController@ajax_python');
+Route::get('admin/analisis/ajax_python/{usuario}/{num_cluster}/{algoritmo}', 'AdminController@ajax_python');
 
 
 #carto DB

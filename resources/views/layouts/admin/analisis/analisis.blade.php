@@ -51,6 +51,14 @@
             <input class="btn btn-sm btn-danger" type="button" value="Actualizar" name="bt_limpiar"  align="center" onclick="window.location.reload()"/>
             
           </td>        
+        </tr>
+        <tr>        
+          <td align="r" colspan="2">
+            <input class="btn btn-sm btn-warning" type="button" value="KMEANS"    name="bt_kmean"  id="bt_kmean"  align="center" onclick="nn();"/>
+            <input class="btn btn-sm btn-warning" type="button" value="DBSCAN"    name="bt_dbscan"  id="bt_dbscan"  align="center" onclick="nn();"/>
+            <input class="btn btn-sm btn-warning" type="button" value="HCN"    name="bt_hcn"  id="bt_hcn"  align="center" onclick="nn();"/>
+            <input class="btn btn-sm btn-warning" type="button" value="HCNE"    name="bt_hcne"  id="bt_hcne"  align="center" onclick="nn();"/>         
+          </td>        
         </tr>      
       </table>
     </form>
@@ -79,14 +87,14 @@
   <!-- Cluster -->  
 
   <script>
-      var var cont_vehiculos=0;
+      var cont_vehiculos=0;
 
     function nn(){
 
                 $.ajax(
             {
               type:"GET",
-              url: "ajax_python/1/1",              
+              url: "ajax_python/1/1/1",              
               success: function(result)
               {
               console.log(result); 
