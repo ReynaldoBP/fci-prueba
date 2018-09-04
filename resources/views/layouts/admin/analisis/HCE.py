@@ -23,7 +23,7 @@ from postlearn.cluster import compute_centers, plot_decision_boundry ## postlear
 
 
 conn = pg.connect(database='gye_datoss', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
-df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist limit 5000",conn)
+df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist ",conn)
 coords = df.as_matrix(columns=['longitud', 'latitud'])
 
 
@@ -48,8 +48,8 @@ num_clusters = len(set(labels))
 lats, lons = zip(*result)
 #centroids = AgglomerativeClustering.cluster_centers
 rep_points = pd.DataFrame({'longitud':lons, 'latitud':lats})
-rep_points.to_csv('data/HCe/centroides-HCne.csv', encoding='utf-8')
-df.to_csv('data/HCe/DataSetCal.csv', encoding='utf-8')
+rep_points.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCe/centroides-HCne.csv', encoding='utf-8')
+df.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCe/DataSetCal.csv', encoding='utf-8')
 rep_points
 
 
@@ -85,6 +85,6 @@ print("Numero de clusters: %i" % num_clusters)
 
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('/var/www/html/fci-prueba/img/images/HCES.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.savefig('/var/www/html/fci-prueba/public/img/images/HCES.png', dpi=300, bbox_inches='tight', pad_inches=0.1)
 plt.show()
 
