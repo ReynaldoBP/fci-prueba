@@ -318,7 +318,7 @@ class AdminController extends Controller
         $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
         $a=array();
         $linea = 0;
-        $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCe/centroides-HCe.csv", "r");
+        $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCe/centroides-HCne.csv", "r");
         while (($datos = fgetcsv($archivo, ",")) == true) 
         {
           $num = count($datos);

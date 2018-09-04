@@ -56,8 +56,8 @@
           <td align="r" colspan="2">
             <input class="btn btn-sm btn-warning" type="button" value="KMEANS"    name="bt_kmean"  id="bt_kmean"  align="center" onclick="ajax_python1();nn(1);"/>
             <input class="btn btn-sm btn-warning" type="button" value="DBSCAN"    name="bt_dbscan"  id="bt_dbscan"  align="center" onclick="ajax_python2();nn(2);"/>
-            <input class="btn btn-sm btn-warning" type="button" value="HCN"    name="bt_hcn"  id="bt_hcn"  align="center" onclick="nn(3);"/>
-            <input class="btn btn-sm btn-warning" type="button" value="HCNE"    name="bt_hcne"  id="bt_hcne"  align="center" onclick="nn(4);"/>         
+            <input class="btn btn-sm btn-warning" type="button" value="HCN"    name="bt_hcn"  id="bt_hcn"  align="center" onclick="ajax_python3();nn(3);"/>
+            <input class="btn btn-sm btn-warning" type="button" value="HCNE"    name="bt_hcne"  id="bt_hcne"  align="center" onclick="ajax_python4();nn(4);"/>         
           </td>        
         </tr>      
       </table>
