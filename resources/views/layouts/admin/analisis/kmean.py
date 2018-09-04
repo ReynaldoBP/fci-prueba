@@ -20,8 +20,8 @@ import requests
 
 
 np.random.seed(2)
-conn = pg.connect(database='datos_gye', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
-df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist limit 5000",conn)
+conn = pg.connect(database='gye_datoss', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
+df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist ",conn)
 coords = df.as_matrix(columns=['longitud', 'latitud']) # se consulta estos campos
 #pandas libreria de reporteria
 
