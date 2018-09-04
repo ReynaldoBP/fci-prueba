@@ -243,35 +243,35 @@ class AdminController extends Controller
     public function ajax_python_analisis1()
     {
 
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
         $array11=json_encode($test1);
         return response($array11);
    }
    public function ajax_python_analisis2()
     {
 
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/kmean.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/kmean.py");
         $array11=json_encode($test1);
         return response($array11);
    }
    public function ajax_python_analisis3()
     {
 
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
         $array11=json_encode($test1);
         return response($array11);
    }
    public function ajax_python_analisis4()
     {
 
-        $test1 = shell_exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCNE.py");
+        $test1 = exec("python /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCNE.py");
         $array11=json_encode($test1);
         return response($array11);
    }     
    public function ajax_python(Request $resquest, $usuario, $cluster,$algoritmo){
 
         if($algoritmo==1){
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/kmean.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/kmean.py");
         $a=array();
         $linea = 0;
         $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/centroides-KmeanCal.csv", "r");
@@ -290,10 +290,10 @@ class AdminController extends Controller
           }
         }
         fclose($archivo);
-        array_push($a, "Kmean");
+        
         }
         if($algoritmo==2){
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/DBSCAM1.py");
         $a=array();
         $linea = 0;
         $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/DbScan/centroides-dbscanCal.csv", "r");
@@ -311,11 +311,11 @@ class AdminController extends Controller
           array_push($a,$datos[2]);
           }
         }
-        array_push($a, "DBCAN");
+        
         fclose($archivo);
         }
         if($algoritmo==3){
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCE.py");
         $a=array();
         $linea = 0;
         $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCe/centroides-HCne.csv", "r");
@@ -333,11 +333,11 @@ class AdminController extends Controller
           array_push($a,$datos[2]);
           }
         }
-        array_push($a, "Hce");
+        
         fclose($archivo);
         }
         if($algoritmo==4){
-        $test1 = shell_exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCNE.py");
+        $test1 = exec("python3 /var/www/html/fci-prueba/resources/views/layouts/admin/analisis/HCNE.py");
         $a=array();
         $linea = 0;
         $archivo = fopen("/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/HCne/centroides-HCne.csv", "r");
@@ -355,7 +355,7 @@ class AdminController extends Controller
           array_push($a,$datos[2]);
           }
         }
-        array_push($a, "Hcne");
+        
         fclose($archivo);
         }
 
