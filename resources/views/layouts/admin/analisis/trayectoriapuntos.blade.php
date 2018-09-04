@@ -82,25 +82,33 @@
  
   <script>      
   
-    function nn(){
-                 $.ajax(
-            {
-              type:"GET",
-              url: "ajax_python/1/1/1",              
-              success: function(result)
+    function nn()
+    {
+      $.ajax(
+        {
+          type:"GET",
+          url: "ajax_python/1/1/1",              
+          success: function(result)
+          {                
+            console.log(result); 
+            var count_result=result.length;
+              for(i=0;i<count_result;i++)
               {
-              console.log(result); 
-                //var imagen = document.getElementById('imagen').src = "{{ asset('img/images/analisis2.png') }}";
-              var newcoor2       = new Array();
-                newcoor2[0]    = result[0];
-                newcoor2[1]    = result[1];
-              L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Lat: "+lat+" lng: "+lng); 
-               },
-           error:function(result){
+                if (i%2!= 0)
+                {
+                  var newcoor2   = new Array();
+                  newcoor2[0]    = result[i-1];
+                  newcoor2[1]    = result[i];
+                  L.marker(newcoor2, {icon: Icon_limite2}).addTo(mymap).bindPopup("Analisis Kmeans");
+                }               
+              }                
+            },
+          error:function(result)
+          {
             swal("", "Error al generar el análisis.!", "success",{icon: "warning",});            
-           }
-            });
-    }  
+          }
+        });
+    }
       var cont_vehiculos=0;
       var bandera_analisis;      
       var latlngs      = new Array();
