@@ -21,7 +21,7 @@ import requests
 
 np.random.seed(2)
 conn = pg.connect(database='gye_datoss', user='postgres', password='admin1234',host='52.38.27.79',port='5432')
-df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist limit 5000",conn)
+df =  psql.read_sql("SELECT * FROM trayectoria_gye_hist ",conn)
 coords = df.as_matrix(columns=['longitud', 'latitud']) # se consulta estos campos
 #pandas libreria de reporteria
 
@@ -52,8 +52,8 @@ rep_points
 # In[5]:
 
 
-rep_points.to_csv('data/Kmean/centroides-KmeanCal.csv', encoding='utf-8') #devuelve arreglos
-df.to_csv('data/Kmean/DataSetCal.csv', encoding='utf-8') #definir rep_points
+rep_points.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/centroides-KmeanCal.csv', encoding='utf-8') #devuelve arreglos
+df.to_csv('/var/www/html/fci-prueba/resources/views/layouts/admin/analisis/data/Kmean/DataSetCal.csv', encoding='utf-8') #definir rep_points
 
 
 # In[6]:
@@ -81,10 +81,8 @@ for k, col in zip(unique_labels, colors):
              markeredgecolor='k', markersize=6)
 
 plt.title('KMEAN Numero Estimado de Clusters: %d' % num_clusters)
-print("Tiempo transcurrido: %.2fs" % elapsed_time)
-print("Número de puntos: %i" % labels.size)
 plt.xlabel('Latitud')
 plt.ylabel('Longitud')
-plt.savefig('/var/www/html/fci-prueba/img/images/KmeansCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1) #me guarda el grafico como imagen
+plt.savefig('/var/www/html/fci-prueba/public/img/images/KmeansCal.png', dpi=300, bbox_inches='tight', pad_inches=0.1) #me guarda el grafico como imagen
 plt.show()
 
